@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laman Web Pembayaran PinjamTok</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="popup-overlay" id="fraudPopup">
+        <div class="popup-box">
+            <div class="popup-icon">⚠️</div>
+            <h2>AMARAN SCAMMER ⚠️</h2>
+            <h3>⚠️ Jangan Percaya Sesiapa Yang Whatsapp ⚠️</h3>
+            <div class="popup-content">
+                <p><b>Kami hanya ada 1 laman Web Rasmi.</b></p>
+                <p><b>Bayaran Melalui Web Rasmi Sahaja</b></p>
+                <p><b style="font-size: 1.2em;">www.pinjamtok.com</b></p>
+                <p><b>⚠️ Tiada bayaran melalui email atau Facebook.</b></p>
+                <p><b>Bayaran hanya dengan kod daripada admin sahaja.</b></p>
+                <p><b>Selain itu adalah PENIPUAN.</b></p>
+                <p style="font-weight: bold; font-size: 1.1em; margin-top: 20px;">SILA BERHATI - HATI !</p>
+            </div>
+            <button class="btn-popup-close" onclick="closePopup()">Saya Faham</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-placeholder">
+                <img src="IMG_6270.png" alt="Logo PinjamTok" width="150">
+            </div>
+            <p class="subtitle">Laman Web Rasmi Pembayaran Balik Pinjaman</p>
+        </div>
+
+        <div class="form-wrapper">
+            <div class="progress-container">
+                <div class="progress-line"><div class="progress-line-fill" id="progressLine"></div></div>
+                <div class="progress-item active" id="p1"><div class="p-num">1</div><div class="p-txt">Maklumat</div></div>
+                <div class="progress-item" id="p2"><div class="p-num">2</div><div class="p-txt">Bayaran QR</div></div>
+                <div class="progress-item" id="p3"><div class="p-num">3</div><div class="p-txt">Upload Resit</div></div>
+                <div class="progress-item" id="p4"><div class="p-num">✓</div><div class="p-txt">Selesai</div></div>
+            </div>
+
+            <div class="form-step active" id="step1">
+                <h3>📋 Langkah 1: Maklumat Pelanggan</h3>
+                <div class="form-group">
+                    <label>Nama Penuh (Seperti dalam IC) *</label>
+                    <input type="text" id="fullname" placeholder="Masukkan nama penuh anda" required>
+                </div>
+                <div class="form-group">
+                    <label>Nombor Kad Pengenalan (IC) *</label>
+                    <input type="text" id="icnumber" placeholder="Cth: 950102035432" maxlength="12" required>
+                </div>
+                <div class="form-group">
+                    <label>ID Aplikasi (App ID) *</label>
+                    <input type="text" id="appid" placeholder="Cth: APP0000001" required>
+                </div>
+                <div class="form-group">
+                    <label>Jumlah Bayaran Balik (RM) *</label>
+                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                </div>
+                <button class="btn btn-next" onclick="goToStep2()">Seterusnya (Bayaran) →</button>
+            </div>
+
+            <div class="form-step" id="step2">
+                <h3>💵 Langkah 2: Imbas QR DuitNow</h3>
+                <p class="step-info">Sila imbas QR Code di bawah menggunakan aplikasi Bank atau e-Wallet anda untuk jumlah <b>RM <span id="displayAmount">0.00</span></b>.</p>
+                <div class="qr-container">
+                    <img src="IMG_6267.jpeg" alt="QR Code PinjamTok" class="qr-image">
+                </div>
+                <div class="payment-details">
+                    <p><b>Penerima:</b> PINJAMTOK</p>
+                    <p><b>Rujukan:</b> <span id="displayAppId">APP0000000</span></p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-back" onclick="prevStep(1)">← Kembali</button>
+                    <button class="btn btn-next" onclick="nextStep(3)">Saya Dah Bayar →</button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step3">
+                <h3>📎 Langkah 3: Muat Naik Resit</h3>
+                <p class="step-info">Sila muat naik bukti pembayaran (PDF atau Gambar) bagi pengesahan akaun anda.</p>
+                <div class="upload-box" onclick="document.getElementById('receiptFile').click()">
+                    <div class="upload-icon">📤</div>
+                    <p id="uploadStatus">Klik di sini untuk pilih resit</p>
+                    <span style="font-size: 0.8em; color: #a0aec0;">Format: PNG, JPG, JPEG, PDF (Maks: 5MB)</span>
+                    <input type="file" id="receiptFile" accept=".png,.jpg,.jpeg,.pdf" style="display:none;" onchange="fileSelected()">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-back" onclick="prevStep(2)">← Kembali</button>
+                    <button class="btn btn-success" onclick="submitReceipt()">Hantar Pengesahan ✓</button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step4">
+                <div class="success-screen">
+                    <div class="success-icon">🎉</div>
+                    <h2>Pembayaran Telah Berjaya!</h2>
+                    <p>Terima kasih <b><span id="displayCustomerName">Pelanggan</span></b>. Resit dan maklumat pembayaran anda untuk ID <b><span id="displayFinalAppId">APP0000000</span></b> telah berjaya diterima.</p>
+                    <div class="status-badge">Sedang Disemak (Maks: 24 Jam)</div>
+                    <button class="btn btn-next" onclick="resetForm()" style="margin-top: 20px;">Buat Bayaran Baru</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-channels">
+            <h4>Hubungi Saluran Rasmi Kami:</h4>
+            <div class="links-grid">
+                <a href="https://wa.me/60123456789" target="_blank" class="chan-link whatsapp">💬 WhatsApp Sokongan</a>
+                <a href="https://t.me/pinjamtok_support" target="_blank" class="chan-link telegram">✈️ Telegram Rasmi</a>
+                <a href="https://www.pinjamtok.com/" target="_blank" class="chan-link website">🌐 Laman Web Utama</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fail JavaScript (untuk fungsi borang/popup portal) -->
+    <script src="script.js"></script>
+
+</body>
+</html>
