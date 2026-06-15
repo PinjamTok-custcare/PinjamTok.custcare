@@ -30,13 +30,218 @@
         }
 
         body {
-            background-color: #f7fafc;
+            background-color: #e0f2fe;
             color: #2d3748;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 999;
+        }
+
+        .nav-logo {
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #2d3748;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .hamburger-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #e0f2fe;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            z-index: 998;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-item {
+            padding: 16px 20px;
+            color: #2d3748;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(49, 130, 206, 0.1);
+        }
+
+        /* Profile Full Bar */
+        .profile-fullbar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 997;
+            display: none;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .profile-fullbar.active {
+            display: flex;
+        }
+
+        .profile-content {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 15px;
+        }
+
+        .profile-header h2 {
+            font-size: 20px;
+            color: #1a202c;
+        }
+
+        .profile-back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #2d3748;
+        }
+
+        .profile-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .profile-menu-item {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #2d3748;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .profile-menu-item:hover {
+            background: #f7fafc;
+            border-color: #3182ce;
+        }
+
+        .profile-menu-item.active {
+            background: #ebf8ff;
+            border-color: #3182ce;
+            color: #3182ce;
+        }
+
+        /* Profile Info Display */
+        .profile-info-display {
+            display: none;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-info-display.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3182ce;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #1a202c;
+            font-weight: 600;
         }
 
         .container {
@@ -49,18 +254,7 @@
             padding-top: 100px;
             border: 1px solid #edf2f7;
             position: relative;
-        }
-
-        /* Logo Top-Left Position */
-        .logo-placeholder {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1000;
-        }
-
-        .logo-placeholder img {
-            display: block;
+            margin-top: 60px;
         }
 
         .header {
@@ -264,6 +458,12 @@
             font-size: 16px;
             font-weight: bold;
             color: #d97706;
+        }
+
+        .countdown-timer.timeout {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #b91c1c;
         }
 
         .payment-details {
@@ -482,9 +682,45 @@
         </div>
     </div>
 
-    <!-- LOGO TOP-LEFT -->
-    <div class="logo-placeholder">
-        <img src="IMG_6270.png" alt="Logo PinjamTok Custcare" width="150" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
+    <!-- TOP NAVIGATION BAR -->
+    <div class="top-nav-bar">
+        <div class="nav-logo">
+            <img src="IMG_6270.png" alt="Logo PinjamTok Custcare" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
+        </div>
+        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-item" onclick="showProfile()">
+            <span>👤</span>
+            <span>Profil</span>
+        </div>
+    </div>
+
+    <!-- PROFILE FULLBAR -->
+    <div class="profile-fullbar" id="profileFullbar">
+        <div class="profile-content">
+            <div class="profile-header">
+                <h2>Profil</h2>
+                <button class="profile-back-btn" onclick="closeProfile()">←</button>
+            </div>
+            <div class="profile-menu">
+                <div class="profile-menu-item" onclick="showProfileInfo('maklumat')">👤 Maklumat Diri</div>
+                <div class="profile-menu-item" onclick="showProfileInfo('bahasa')">🌐 Bahasa</div>
+                <div class="profile-menu-item" onclick="showProfileInfo('terma')">📋 Terma & Syarat</div>
+            </div>
+            <div class="profile-info-display" id="profileInfoDisplay">
+                <div class="info-box">
+                    <div class="info-label">Nama Penuh</div>
+                    <div class="info-value" id="displayProfileName">-</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Nombor Telefon</div>
+                    <div class="info-value" id="displayProfilePhone">-</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- UTAMA PORTAL KANDUNGAN -->
@@ -592,6 +828,8 @@
     <script>
         let currentStep = 1;
         let countdownInterval = null;
+        let customerName = '';
+        let customerPhone = '';
 
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('fraudPopup').style.display = 'flex';
@@ -599,6 +837,33 @@
 
         function closePopup() {
             document.getElementById('fraudPopup').style.display = 'none';
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+        }
+
+        function showProfile() {
+            closeSidebar();
+            document.getElementById('profileFullbar').classList.add('active');
+        }
+
+        function closeProfile() {
+            document.getElementById('profileFullbar').classList.remove('active');
+            document.getElementById('profileInfoDisplay').classList.remove('active');
+        }
+
+        function showProfileInfo(type) {
+            if (type === 'maklumat') {
+                document.getElementById('profileInfoDisplay').classList.add('active');
+            } else {
+                document.getElementById('profileInfoDisplay').classList.remove('active');
+            }
         }
 
         function getInitials(name) {
@@ -634,10 +899,13 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(countdownInterval);
-                    timerElement.innerText = '⏱️ 0:00 - Masa tamat';
-                    timerElement.style.background = '#fee2e2';
-                    timerElement.style.borderColor = '#fca5a5';
-                    timerElement.style.color = '#b91c1c';
+                    timerElement.innerText = '⏱️ ⚠️ TIME OUT - Masa Tamat';
+                    timerElement.classList.add('timeout');
+                    
+                    // Auto redirect to step 1 after 3 seconds
+                    setTimeout(() => {
+                        resetForm();
+                    }, 3000);
                 } else {
                     timeLeft--;
                 }
@@ -658,10 +926,15 @@
                 return;
             }
 
+            customerName = fullname;
+            customerPhone = appid;
+
             document.getElementById('displayAmount').innerText = parseFloat(amount).toFixed(2);
             document.getElementById('displayICNumber').innerText = icnumber;
             document.getElementById('displayCustomerName').innerText = fullname;
             document.getElementById('displayFinalAppId').innerText = appid;
+            document.getElementById('displayProfileName').innerText = fullname;
+            document.getElementById('displayProfilePhone').innerText = appid;
 
             updateCustomerGreeting(fullname);
             showCustomerGreeting();
@@ -753,12 +1026,14 @@
 
             const timerElement = document.getElementById('countdownTimer');
             timerElement.innerText = '⏱️ 1:59';
+            timerElement.classList.remove('timeout');
             timerElement.style.background = '#fef3c7';
             timerElement.style.borderColor = '#fbbf24';
             timerElement.style.color = '#d97706';
             
             hideCustomerGreeting();
             nextStep(1);
+            closeSidebar();
         }
     </script>
 </body>
