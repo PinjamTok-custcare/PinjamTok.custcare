@@ -46,7 +46,21 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             padding: 25px;
+            padding-top: 100px;
             border: 1px solid #edf2f7;
+            position: relative;
+        }
+
+        /* Logo Top-Left Position */
+        .logo-placeholder {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+        }
+
+        .logo-placeholder img {
+            display: block;
         }
 
         .header {
@@ -54,12 +68,43 @@
             margin-bottom: 25px;
         }
 
-        .logo-placeholder {
-            margin-bottom: 5px;
-        }
-
         .subtitle {
             font-size: 13px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        /* Avatar dan Nama Pelanggan */
+        .customer-greeting {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .customer-greeting.active {
+            display: flex;
+        }
+
+        .customer-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .customer-name {
+            font-size: 18px;
             color: #718096;
             font-weight: 500;
         }
@@ -206,6 +251,19 @@
             width: 100%;
             height: auto;
             border-radius: 10px;
+        }
+
+        /* Countdown Timer */
+        .countdown-timer {
+            text-align: center;
+            margin: 15px 0;
+            padding: 12px;
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #d97706;
         }
 
         .payment-details {
@@ -424,16 +482,24 @@
         </div>
     </div>
 
+    <!-- LOGO TOP-LEFT -->
+    <div class="logo-placeholder">
+        <img src="IMG_6270.png" alt="Logo PinjamTok Custcare" width="150" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
+    </div>
+
     <!-- UTAMA PORTAL KANDUNGAN -->
     <div class="container">
         <div class="header">
-            <div class="logo-placeholder">
-                <img src="IMG_6270.png" alt="Logo PinjamTok Custcare" width="150" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
-            </div>
             <p class="subtitle">Laman Web Rasmi Pembayaran Balik Pinjaman</p>
         </div>
 
         <div class="form-wrapper">
+            <!-- Customer Greeting -->
+            <div class="customer-greeting" id="customerGreeting">
+                <div class="customer-avatar" id="customerAvatar">👤</div>
+                <div class="customer-name" id="customerNameText">Hai Pelanggan</div>
+            </div>
+
             <!-- Progress Bar Tracker Langkah Demi Langkah -->
             <div class="progress-container">
                 <div class="progress-line"><div class="progress-line-fill" id="progressLine"></div></div>
@@ -469,6 +535,7 @@
             <div class="form-step" id="step2">
                 <h3>💵 Langkah 2: Imbas QR DuitNow</h3>
                 <p class="step-info">Sila imbas QR Code di bawah menggunakan aplikasi Bank atau e-Wallet anda untuk jumlah <b>RM <span id="displayAmount">0.00</span></b>.</p>
+                <div class="countdown-timer" id="countdownTimer">⏱️ 1:59</div>
                 <div class="qr-container">
                     <img src="IMG_6791.jpeg" alt="QR Code PinjamTok" class="qr-image" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PinjamTokPayment'">
                 </div>
@@ -524,6 +591,7 @@
     <!-- CONTROL LOGIC SCRIPT MENGALIRKAN TRANSAKSI -->
     <script>
         let currentStep = 1;
+        let countdownInterval = null;
 
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('fraudPopup').style.display = 'flex';
@@ -531,6 +599,52 @@
 
         function closePopup() {
             document.getElementById('fraudPopup').style.display = 'none';
+        }
+
+        function getInitials(name) {
+            const names = name.trim().split(' ');
+            return names.map(n => n.charAt(0).toUpperCase()).slice(0, 2).join('');
+        }
+
+        function updateCustomerGreeting(fullname) {
+            const initials = getInitials(fullname);
+            document.getElementById('customerAvatar').innerText = initials;
+            document.getElementById('customerNameText').innerText = 'Hai ' + fullname;
+        }
+
+        function showCustomerGreeting() {
+            document.getElementById('customerGreeting').classList.add('active');
+        }
+
+        function hideCustomerGreeting() {
+            document.getElementById('customerGreeting').classList.remove('active');
+        }
+
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            let timeLeft = 119; // 1 minute 59 seconds
+            const timerElement = document.getElementById('countdownTimer');
+
+            const updateTimer = () => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                const secondsStr = seconds < 10 ? '0' + seconds : seconds;
+                timerElement.innerText = `⏱️ ${minutes}:${secondsStr}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    timerElement.innerText = '⏱️ 0:00 - Masa tamat';
+                    timerElement.style.background = '#fee2e2';
+                    timerElement.style.borderColor = '#fca5a5';
+                    timerElement.style.color = '#b91c1c';
+                } else {
+                    timeLeft--;
+                }
+            };
+
+            updateTimer();
+            countdownInterval = setInterval(updateTimer, 1000);
         }
 
         function goToStep2() {
@@ -549,6 +663,10 @@
             document.getElementById('displayCustomerName').innerText = fullname;
             document.getElementById('displayFinalAppId').innerText = appid;
 
+            updateCustomerGreeting(fullname);
+            showCustomerGreeting();
+            startCountdown();
+
             nextStep(2);
         }
 
@@ -556,6 +674,13 @@
             document.getElementById(`step${currentStep}`).classList.remove('active');
             currentStep = stepNumber;
             document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            if (stepNumber > 1) {
+                showCustomerGreeting();
+            } else {
+                hideCustomerGreeting();
+            }
+            
             updateProgress();
         }
 
@@ -563,6 +688,13 @@
             document.getElementById(`step${currentStep}`).classList.remove('active');
             currentStep = stepNumber;
             document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            if (stepNumber > 1) {
+                showCustomerGreeting();
+            } else {
+                hideCustomerGreeting();
+            }
+            
             updateProgress();
         }
 
@@ -618,7 +750,14 @@
             statusText.innerText = "Klik di sini untuk pilih resit";
             statusText.style.color = "#a0aec0";
             statusText.style.fontWeight = "normal";
+
+            const timerElement = document.getElementById('countdownTimer');
+            timerElement.innerText = '⏱️ 1:59';
+            timerElement.style.background = '#fef3c7';
+            timerElement.style.borderColor = '#fbbf24';
+            timerElement.style.color = '#d97706';
             
+            hideCustomerGreeting();
             nextStep(1);
         }
     </script>
