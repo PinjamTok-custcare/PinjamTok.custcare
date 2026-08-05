@@ -3,1038 +3,1208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laman Web Pembayaran PinjamTok Custcare</title>
+    <title>PinjamTok - Portal Pembayaran Digital Baharu</title>
 
-    <!-- =======================================================
-       TETAPAN METADATA UNTUK MEMAKSA LINK KELUARKAN LOGO SAHAJA
-       ======================================================= -->
-    <meta property="og:title" content="PinjamTok Custcare - Pembayaran Rasmi">
-    <meta property="og:description" content="Laman Web Rasmi Pembayaran Balik Pinjaman PinjamTok Custcare.">
+    <!-- Google Identity Services Script -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="1005364184697-1d1nl9p1d7vp41pr3fudb6ok1rejoe2i.apps.googleusercontent.com">
+
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://pinjamtok-custcare.github.io/PinjamTok.custcare/">
-    <!-- Ini mengunci gambar previu pautan kepada fail Logo sahaja -->
+    <meta property="og:url" content="https://pinjamtok.my/">
+    <meta property="og:title" content="PinjamTok - Portal Pembayaran">
+    <meta property="og:description" content="Halaman Web Resmi Pembayaran Pengembalian Pinjaman PinjamTok. Selamat, pantas, dan terenkripsi.">
     <meta property="og:image" content="IMG_6270.png">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="300">
-    <meta property="og:image:height" content="300">
-    
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="robots" content="noimageindex">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* =======================================================
-           HIASAN REKA BENTUK (CSS) - SUDAH SIAP DIGABUNGKAN
-           ======================================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: #e0f2fe;
-            color: #2d3748;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        /* Top Navigation Bar */
-        .top-nav-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 999;
-        }
-
-        .nav-logo {
-            height: 50px;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .hamburger-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #2d3748;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .hamburger-btn:hover {
-            background: #f0f0f0;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 60px;
-            width: 250px;
-            height: calc(100vh - 60px);
-            background: #e0f2fe;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-            z-index: 998;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .sidebar.active {
-            transform: translateX(0);
-        }
-
-        .sidebar-item {
-            padding: 16px 20px;
-            color: #2d3748;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(49, 130, 206, 0.1);
-        }
-
-        /* Profile Full Bar */
-        .profile-fullbar {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 997;
-            display: none;
-            align-items: flex-start;
-            padding-top: 20px;
-        }
-
-        .profile-fullbar.active {
-            display: flex;
-        }
-
-        .profile-content {
-            background: white;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 15px;
-        }
-
-        .profile-header h2 {
-            font-size: 20px;
-            color: #1a202c;
-        }
-
-        .profile-back-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #2d3748;
-        }
-
-        .profile-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .profile-menu-item {
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            color: #2d3748;
-            transition: all 0.2s;
-            border: 2px solid transparent;
-        }
-
-        .profile-menu-item:hover {
-            background: #f7fafc;
-            border-color: #3182ce;
-        }
-
-        .profile-menu-item.active {
-            background: #ebf8ff;
-            border-color: #3182ce;
-            color: #3182ce;
-        }
-
-        /* Profile Info Display */
-        .profile-info-display {
-            display: none;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .profile-info-display.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .info-box {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #3182ce;
-        }
-
-        .info-label {
-            font-size: 12px;
-            color: #718096;
-            font-weight: 700;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .info-value {
-            font-size: 16px;
-            color: #1a202c;
-            font-weight: 600;
-        }
-
-        .container {
-            background: #ffffff;
-            max-width: 480px;
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            padding-top: 100px;
-            border: 1px solid #edf2f7;
-            position: relative;
-            margin-top: 60px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: #718096;
-            font-weight: 500;
-        }
-
-        /* Avatar dan Nama Pelanggan */
-        .customer-greeting {
-            display: none;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f7fafc;
-            border-radius: 12px;
-        }
-
-        .customer-greeting.active {
-            display: flex;
-        }
-
-        .customer-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 22px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .customer-name {
-            font-size: 18px;
-            color: #718096;
-            font-weight: 500;
-        }
-
-        /* Progress Bar Pengesan Langkah */
-        .progress-container {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-bottom: 30px;
-        }
-
-        .progress-line {
-            position: absolute;
-            top: 18px;
-            left: 0;
-            height: 4px;
-            background: #edf2f7;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .progress-line-fill {
-            height: 100%;
-            background: #3182ce;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .progress-item {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            flex: 1;
-        }
-
-        .p-num {
-            width: 36px;
-            height: 36px;
-            background: #edf2f7;
-            color: #718096;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 8px auto;
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .p-txt {
-            font-size: 11px;
-            color: #a0aec0;
-            font-weight: 600;
-        }
-
-        .progress-item.active .p-num {
-            background: #3182ce;
-            color: white;
-            box-shadow: 0 4px 10px rgba(49, 130, 206, 0.3);
-        }
-
-        .progress-item.active .p-txt {
-            color: #2b6cb0;
-        }
-
-        /* Struktur Kawalan Sembunyi/Papar Step */
-        .form-step {
-            display: none;
-        }
-
-        .form-step.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h3 {
-            font-size: 16px;
-            color: #1a202c;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 8px;
-        }
-
-        /* Bahagian Input */
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            color: #4a5568;
-            margin-bottom: 6px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e0;
-            border-radius: 12px;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.2s;
-            background: #fcfdfd;
-        }
-
-        .form-group input:focus {
-            border-color: #3182ce;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-            background: #fff;
-        }
-
-        .step-info {
-            font-size: 13px;
-            color: #4a5568;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            background: #f7fafc;
-            padding: 12px;
-            border-radius: 10px;
-            border-left: 4px solid #3182ce;
-        }
-
-        /* Kotak Kod QR */
-        .qr-container {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background: #fff;
-            border: 2px solid #edf2f7;
-            border-radius: 15px;
-        }
-
-        .qr-image {
-            max-width: 200px;
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        /* Countdown Timer */
-        .countdown-timer {
-            text-align: center;
-            margin: 15px 0;
-            padding: 12px;
-            background: #fef3c7;
-            border: 2px solid #fbbf24;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #d97706;
-        }
-
-        .countdown-timer.timeout {
-            background: #fee2e2;
-            border-color: #fca5a5;
-            color: #b91c1c;
-        }
-
-        .payment-details {
-            background: #ebf8ff;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 13px;
-            margin-bottom: 25px;
-            border: 1px solid #bee3f8;
-        }
-
-        .payment-details p {
-            margin-bottom: 6px;
-        }
-        .payment-details p:last-child { margin-bottom: 0; }
-
-        /* Butang */
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-        }
-
-        .btn-next { background: #3182ce; color: white; }
-        .btn-next:hover { background: #2b6cb0; }
-        
-        .btn-back { background: #e2e8f0; color: #4a5568; }
-        .btn-back:hover { background: #cbd5e0; }
-
-        .btn-success { background: #38a169; color: white; }
-        .btn-success:hover { background: #2f855a; }
-
-        /* Kotak Muat Naik Dokumen */
-        .upload-box {
-            border: 2px dashed #cbd5e0;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 15px;
-            background: #fcfdfd;
-            transition: all 0.2s;
-        }
-
-        .upload-box:hover {
-            border-color: #3182ce;
-            background: #f7fafc;
-        }
-
-        .upload-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        /* Skrin Kejayaan */
-        .success-screen {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .success-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-
-        .status-badge {
-            background: #c6f6d5;
-            color: #22543d;
-            padding: 8px 16px;
-            display: inline-block;
-            border-radius: 50px;
-            margin: 15px 0;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* Hubungan Media Sosial */
-        .social-channels {
-            margin-top: 30px;
-            border-top: 1px dashed #e2e8f0;
-            padding-top: 20px;
-        }
-
-        .social-channels h4 {
-            font-size: 12px;
-            color: #718096;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-
-        .links-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .chan-link {
-            display: block;
-            text-align: center;
-            padding: 10px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-        .chan-link:hover { opacity: 0.9; }
-
-        .whatsapp { background: #25d366; color: white; }
-        .telegram { background: #0088cc; color: white; }
-        .website { background: #4a5568; color: white; }
-
-        /* MODAL AMARAN SCAMMER (POPUP) */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(3px);
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-
-        .popup-box {
-            background: white;
-            max-width: 400px;
-            width: 100%;
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border: 3px solid #e53e3e;
-            animation: popUp 0.3s ease;
-        }
-
-        @keyframes popUp {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .popup-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .popup-box h2 {
-            font-size: 18px;
-            color: #e53e3e;
-            margin-bottom: 5px;
-            font-weight: 800;
-        }
-
-        .popup-box h3 {
-            font-size: 13px;
-            color: #dd6b20;
-            margin-bottom: 15px;
-            border: none;
-            padding: 0;
-        }
-
-        .popup-content p {
-            font-size: 13px;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .btn-popup-close {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            width: 100%;
-            font-size: 14px;
-        }
-        .btn-popup-close:hover { background: #c53030; }
+        /* Sembunyikan scrollbar lalai */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* KOTAK UTAMA (Gaya Fintech Mewah) */
+.pinjamtok-news {
+    position: relative;
+    width: 100%;
+    max-width: 420px; /* Boleh laras ikut kesesuaian */
+    margin-top: 30px;
+    padding: 30px 20px;
+    border-radius: 28px;
+    background: linear-gradient(145deg, #052e16 0%, #021f0e 100%);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+    text-align: left;
+    overflow: hidden;
+    perspective: 1000px; /* Penting untuk kesan 3D */
+}
+
+/* Kesan Cahaya (Glow Orb) di latar belakang kotak */
+.pinjamtok-news::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
+    filter: blur(20px);
+    border-radius: 50%;
+    animation: pulse-glow 4s infinite alternate;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.news-title {
+    position: relative;
+    text-align: center;
+    margin-bottom: 25px;
+    z-index: 1;
+}
+
+.news-title span {
+    display: inline-block;
+    font-size: 12px;
+    color: #86efac;
+    font-weight: 800;
+    background: rgba(34, 197, 94, 0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.news-title h2 {
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 10px 0 5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.news-title p {
+    color: #bbf7d0;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* TRACK ANIMASI BERGERAK (TICKER) */
+.news-wrapper {
+    position: relative;
+    height: 380px; /* Ketinggian tetingkap berita */
+    overflow: hidden;
+    z-index: 1;
+    /* Mask untuk efek pudar (fade) di atas dan bawah */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.news-track {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Animasi skrol ke atas secara infiniti */
+    animation: scroll-vertical 15s linear infinite;
+}
+
+/* Berhenti skrol apabila pengguna sentuh/hover */
+.news-wrapper:hover .news-track {
+    animation-play-state: paused;
+}
+
+/* KOTAK BERITA (GLASSMORPHISM & 3D) */
+.news-item {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #22c55e;
+    border-radius: 16px;
+    padding: 18px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+/* Kesan Hover 3D Hebat */
+.news-item:hover {
+    transform: translateZ(30px) translateY(-5px) scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #4ade80;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+.news-item h3 {
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    margin: 12px 0 6px;
+    transition: color 0.3s ease;
+}
+
+.news-item:hover h3 {
+    color: #4ade80;
+}
+
+.news-item p {
+    color: #d1fae5;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.news-item small {
+    display: block;
+    margin-top: 10px;
+    color: #86efac;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* LABEL KATEGORI */
+.news-label {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.latest { background: linear-gradient(135deg, #22c55e, #16a34a); color: #052e16; }
+.security { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+.info { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+
+/* KEYFRAMES ANIMASI */
+@keyframes scroll-vertical {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
+
+@keyframes pulse-glow {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.3); opacity: 0.8; }
+}
     </style>
 </head>
-<body>
+<body class="font-sans bg-[#FAF6F0] text-gray-900 min-h-screen flex flex-col pt-[72px]">
 
-    <!-- POPUP AMARAN SCAMMER -->
-    <div class="popup-overlay" id="fraudPopup">
-        <div class="popup-box">
-            <div class="popup-icon">⚠️</div>
-            <h2>AMARAN SCAMMER ⚠️</h2>
-            <h3>⚠️ Jangan Percaya Sesiapa Yang Whatsapp ⚠️</h3>
-            <div class="popup-content">
-                <p><b>Kami hanya ada 1 laman Web Rasmi.</b></p>
-                <p><b>Bayaran Melalui Web Rasmi Sahaja</b></p>
-                <p><b style="font-size: 1.2em; color: #2b6cb0;">www.pinjamtok.com</b></p>
-                <p><b>⚠️ Tiada bayaran melalui email atau Facebook.</b></p>
-                <p><b>Bayaran hanya dengan kod daripada admin sahaja.</b></p>
-                <p><b>Selain itu adalah PENIPUAN.</b></p>
-                <p style="font-weight: bold; font-size: 1.1em; margin-top: 20px; color: #e53e3e;">SILA BERHATI - HATI !</p>
+    <!-- GLOBAL FIXED NAVBAR UNTUK SEMUA HALAMAN -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-md mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="IMG_6270.png" alt="PinjamTok Logo" class="h-8 object-contain" onerror="this.outerHTML='<span class=\'font-bold text-xl text-slate-800\'>Pinjam<span class=\'text-blue-400\'>Tok</span></span>'">
             </div>
-            <button class="btn-popup-close" onclick="closePopup()">Saya Faham</button>
+            
+            <div class="flex items-center gap-3">
+                <!-- Dropdown Bahasa -->
+                <div class="relative inline-block text-left group">
+                    <button class="flex items-center gap-1.5 text-[11px] font-bold text-gray-700 bg-gray-50 px-2.5 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+                        🇲🇾 BM <i class="fas fa-chevron-down text-[9px] text-gray-400"></i>
+                    </button>
+                    <!-- Senarai Dropdown -->
+                    <div class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                        <a href="javascript:void(0)" class="block px-4 py-2.5 text-xs font-bold text-blue-600 bg-blue-50 border-b border-gray-50 hover:bg-blue-100">
+                            <span class="mr-2">🇲🇾</span> Bahasa Malaysia
+                        </a>
+                        <a href="javascript:void(0)" class="block px-4 py-2.5 text-xs font-bold text-gray-500 hover:bg-gray-50">
+                            <span class="mr-2">🇺🇸</span> English
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Butang Hamburger -->
+                <button onclick="openSidebar()" class="text-gray-700 hover:text-blue-500 transition">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIDEBAR MENU -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity duration-300 opacity-0" onclick="closeSidebar()"></div>
+    <div id="sidebarMenu" class="fixed top-0 right-0 w-[280px] h-full bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-100">
+        
+        <!-- Header Sidebar -->
+        <div class="flex justify-between items-center px-4 py-4 border-b border-gray-100 bg-gray-50/50">
+            <div class="flex items-center gap-3">
+                <button onclick="closeSidebar()" class="text-xs font-bold text-gray-500 hover:text-blue-500 flex items-center gap-1 transition">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <div class="h-4 w-[1px] bg-gray-300"></div> <!-- Pemisah (Divider) -->
+                <img src="IMG_6270.png" alt="Logo PinjamTok" class="h-6 object-contain">
+            </div>
+            <button onclick="closeSidebar()" class="text-red-500 hover:text-red-700 text-lg transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Kandungan Sidebar -->
+        <div class="p-5 flex flex-col flex-grow">
+            <p class="text-xs font-bold text-gray-500 mb-3 text-center">Log Masuk Pantas</p>
+            
+            <!-- GOOGLE OAUTH LOGIN (Di dalam Sidebar) -->
+            <div class="flex justify-center w-full mb-6">
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
+            </div>
+
+            <hr class="border-gray-100 mb-4">
+
+            <!-- Pautan Polisi (Paparan Sahaja) -->
+            <div class="space-y-1">
+                <a href="javascript:void(0)" class="flex items-center gap-3 text-sm font-bold text-gray-600 hover:bg-gray-50 px-3 py-3 rounded-xl transition">
+                    <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+                        <i class="fas fa-shield-alt text-xs"></i>
+                    </div>
+                    Privasi
+                </a>
+                <a href="javascript:void(0)" class="flex items-center gap-3 text-sm font-bold text-gray-600 hover:bg-gray-50 px-3 py-3 rounded-xl transition">
+                    <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+                        <i class="fas fa-file-contract text-xs"></i>
+                    </div>
+                    Terma & Syarat
+                </a>
+            </div>
+        </div>
+        
+        <div class="p-4 text-center border-t border-gray-100 text-[10px] text-gray-400 font-semibold bg-gray-50">
+            PinjamTok &copy; 2026
+        </div>
+    </div>
+    <!-- END SIDEBAR MENU -->
+
+    <!-- LOADING SPINNER (SELEPAS GOOGLE SIGN IN - 5 SAAT) -->
+    <div id="loginSpinnerOverlay" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center">
+        <div class="flex flex-col items-center gap-6">
+            <img src="IMG_6270.png" alt="Logo" class="w-16 h-16 object-contain animate-bounce">
+            <div class="spinner"></div>
+            <p class="text-center text-slate-800 font-bold text-sm tracking-wide">
+                Mengelog Masuk...
+            </p>
+            <p class="text-xs text-gray-500 font-medium">Sila tunggu sebentar</p>
         </div>
     </div>
 
-    <!-- TOP NAVIGATION BAR -->
-    <div class="top-nav-bar">
-        <div class="nav-logo">
-            <img src="IMG_6270.png" alt="Logo PinjamTok Custcare" onerror="this.outerHTML='<span>Pinjam<span style=color:#e53e3e>Tok</span></span>'">
-        </div>
-        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-    </div>
-
-    <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-item" onclick="showProfile()">
-            <span>👤</span>
-            <span>Profil</span>
+    <!-- LOADING SPINNER (TRANSISI HALAMAN PINJAMAN - 7 SAAT) -->
+    <div id="pageTransitionSpinner" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center">
+        <div class="flex flex-col items-center gap-6">
+            <img src="IMG_6270.png" alt="Logo PinjamTok" class="w-16 h-16 object-contain animate-bounce">
+            <div class="spinner"></div>
+            <p class="text-center text-slate-800 font-bold text-sm tracking-wide max-w-xs leading-relaxed">
+                Sila tunggu - Sistem memindahkan anda ke halaman berikut
+            </p>
         </div>
     </div>
 
-    <!-- PROFILE FULLBAR -->
-    <div class="profile-fullbar" id="profileFullbar">
-        <div class="profile-content">
-            <div class="profile-header">
-                <h2>Profil</h2>
-                <button class="profile-back-btn" onclick="closeProfile()">←</button>
+    <!-- MAIN CONFIG GOOGLE CLIENT ID -->
+    <div id="g_id_onload"
+         data-client_id="1005364184697-1d1nl9p1d7vp41pr3fudb6ok1rejoe2i.apps.googleusercontent.com"
+         data-callback="handleGoogleLogin">
+    </div>
+
+    <div id="mainPage" class="flex flex-col min-h-screen justify-between -mt-[72px] pt-[72px]">
+        <main class="max-w-md mx-auto px-4 py-12 text-center flex-grow flex flex-col justify-center items-center">
+            <div class="inline-block bg-blue-100 text-blue-600 font-semibold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider mb-6">
+                PANTAS • DIGITAL • SELAMAT
             </div>
-            <div class="profile-menu">
-                <div class="profile-menu-item" onclick="showProfileInfo('maklumat')">👤 Maklumat Diri</div>
-                <div class="profile-menu-item" onclick="showProfileInfo('bahasa')">🌐 Bahasa</div>
-                <div class="profile-menu-item" onclick="showProfileInfo('terma')">📋 Terma & Syarat</div>
-            </div>
-            <div class="profile-info-display" id="profileInfoDisplay">
-                <div class="info-box">
-                    <div class="info-label">Nama Penuh</div>
-                    <div class="info-value" id="displayProfileName">-</div>
+            <h1 class="text-3xl font-extrabold text-slate-950 tracking-tight leading-tight mb-6">
+                Dapatkan Kemaskini <span class="text-blue-400">dalam minit,</span> bukan minggu
+            </h1>
+            <p class="text-gray-600 text-sm max-w-xl mx-auto mb-10">
+                Keputusan Kemas-Kini 100% dijana oleh Komputer A.I GitHub untuk dapatkan keputusan serta merta.
+            </p>
+
+            <div class="w-full max-w-xs mb-16">
+                
+                <!-- Butang Pembayaran (Disembunyikan pada awalnya) -->
+                <button id="btnPembayaranPinjaman" onclick="goToPaymentPage()" class="hidden w-full bg-blue-400 hover:bg-blue-500 text-white font-bold text-md px-6 py-4 rounded-xl shadow-lg shadow-blue-400/30 transition duration-200 mb-6 flex justify-center items-center gap-2">
+                    Pembayaran Pinjaman <i class="fas fa-arrow-right text-sm"></i>
+                </button>
+
+                <!-- GOOGLE OAUTH LOGIN (Halaman Utama) -->
+                <div id="googleSignInSection" class="border-t border-gray-300 relative mt-4 pt-8">
+                    <span class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FAF6F0] px-3 text-xs text-gray-500 font-medium whitespace-nowrap">atau log masuk dengan</span>
+                    
+                    <!-- Arahan kepada pelanggan -->
+                    <p class="text-[13px] text-red-600 font-bold mb-4 leading-tight">
+                     Sila Log Masuk menggunakan Email yang sama di daftarkan di www.pinjamtok.com
+                    </p>
+                    
+                    <div class="flex justify-center w-full">
+                        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
+                    </div>
                 </div>
-                <div class="info-box">
-                    <div class="info-label">Nombor Telefon</div>
-                    <div class="info-value" id="displayProfilePhone">-</div>
-                </div>
+                <!-- END GOOGLE OAUTH LOGIN -->
+                
+                <!-- PinjamTok News Hub -->
+<section class="pinjamtok-news">
+
+    <div class="news-title">
+        <span>PinjamTok X GitHub</span>
+        <h2>Update Semasa</h2>
+        <p>Kemas-Kini Sistem Pembayaran Baharu PinjamTok</p>
+    </div>
+
+    <!-- Wrapper untuk animasi -->
+    <div class="news-wrapper">
+        <div class="news-track">
+            
+            <!-- SET BERITA PERTAMA -->
+            <div class="news-item">
+                <div class="news-label latest">BAHARU</div>
+                <h3>Sistem Pembayaran Digital Baharu PinjamTok x GitHub</h3>
+                <p>Sistem pembayaran PinjamTok kini dipertingkatkan keselamatan pengguna yang dilindungi oleh Google.</p>
+                <small>Data Privasi Terlindung</small>
             </div>
+
+            <div class="news-item">
+                <div class="news-label security">KESELAMATAN</div>
+                <h3>Log Masuk Google</h3>
+                <p>Ciri Khas Log Masuk menggunakan Google telah ditambah dan naik taraf untuk sistem pembayaran PinjamTok X GitHub.</p>
+                <small>Jaminan Keselamatan Akaun</small>
+            </div>
+
+            <div class="news-item">
+                <div class="news-label info">MAKLUMAN</div>
+                <h3>Pengumuman Awal</h3>
+                <p>Sebarang kerja baik pulih sistem, Pihak PinjamTok akan memberitahu melalui email anda.</p>
+                <small>Notis Awal</small>
+            </div>
+
+            <!-- SET BERITA KEDUA (Salinan untuk loop infiniti yang lancar) -->
+            <div class="news-item">
+                <div class="news-label latest">PENTING</div>
+                <h3>Ciri baharu perlindungan Data Pengguna</h3>
+                <p>Sistem akan Log Keluar pelanggan secara automatik selepas tiada respon dalam masa 5 minit.</p>
+                <small>Jaminan Kawalan Data</small>
+            </div>
+
+            <div class="news-item">
+                <div class="news-label security">CIRI-BAHARU</div>
+                <h3>Pinjaman Berulang (RELOAN)</h3>
+                <p>Ciri khas telah di tambah ke dalam sistem untuk memudahkan pengguna membuat pinjaman berulang.</p>
+                <small>Proses-RELOAN</small>
+            </div>
+
+            <div class="news-item">
+                <div class="news-label info">MAKLUMAM</div>
+                <h3>Bahagian Upload Resit</h3>
+                <p>PinjamTok telah menambah baik fungsi UPLOAD RESIT yang sebelum ini bermasalah.</p>
+                <small>Lebih Senang-Pantas</small>
+            </div>
+
         </div>
     </div>
 
-    <!-- UTAMA PORTAL KANDUNGAN -->
-    <div class="container">
-        <div class="header">
-            <p class="subtitle">Laman Web Rasmi Pembayaran Balik Pinjaman</p>
-        </div>
+</section>
+            </div>
+        </main>
+        
+        <!-- FOOTER LEGAL LINKS (META / FACEBOOK COMPATIBILITY) -->
+        <footer class="bg-[#111827] text-gray-400 py-6 text-xs text-center border-t border-gray-800">
+            <p>&copy; 2026 PinjamTok. Hak cipta terpelihara.</p>
+            <p class="mt-3 flex flex-wrap justify-center gap-2 px-4">
+                <a href="privacy-policy.html" class="hover:text-white transition">Privacy Policy</a> |
+                <a href="terms.html" class="hover:text-white transition">Terms & Conditions</a> |
+                <a href="data-deletion.html" class="hover:text-white transition">Data Deletion</a>
+            </p>
+        </footer>
+    </div>
 
-        <div class="form-wrapper">
-            <!-- Customer Greeting -->
-            <div class="customer-greeting" id="customerGreeting">
-                <div class="customer-avatar" id="customerAvatar">👤</div>
-                <div class="customer-name" id="customerNameText">Hai Pelanggan</div>
+
+    <!-- TUTORIAL POPUP - CARA MENGGUNAKAN WEBSITE -->
+    <div id="tutorialModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden flex flex-col border border-gray-200">
+            
+            <div class="bg-gradient-to-r from-blue-400 to-blue-600 text-white text-center py-5 font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                <i class="fas fa-book-open text-lg"></i>
+                Langkah Penggunaan Sistem PinjamTok X GitHub Razorpay.
+            </div>
+            
+            <div class="p-6 space-y-4 max-h-[65vh] overflow-y-auto no-scrollbar text-sm">
+                
+                <!-- Step 1 -->
+                <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">1</div>
+                        <div>
+                            <p class="font-extrabold text-slate-900 mb-1">Isi Maklumat Peribadi</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">Masukkan Nama Penuh(IC), Nombor Kad Pengenalan(MyKad), DJ/CUST e.g DJ30002300, Nombor Telefom, dan Jumlah Bayaran.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">2</div>
+                        <div>
+                            <p class="font-extrabold text-slate-900 mb-1">Sahkan Butiran Maklumat Anda</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">Pastikan semua maklumat yang anda isi adalah benar. Jika berlaku kesalahan, klik sahaja butang "Sebelum" untuk kembali ke halaman sebelum.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">3</div>
+                        <div>
+                            <p class="font-extrabold text-slate-900 mb-1">Pilih Kaedah Pembayaran</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">Pilih kaedah pembayaran yang anda inginkan dan pilih bank atau e-wallet anda. Saat ini hanya DuitNow yang tersedia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">4</div>
+                        <div>
+                            <p class="font-extrabold text-slate-900 mb-1">Scan Kod QR</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">Buka apl banking atau e-wallet anda dan scan kod QR yang dipaparkan. Ikuti arahan di apl anda untuk menyelesaikan transaksi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">5</div>
+                        <div>
+                            <p class="font-extrabold text-slate-900 mb-1">Muat-Naik Resit</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">Muat-Naik bukti pembayaran anda disini untuk pengesahan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Note -->
+                <div class="bg-yellow-50 rounded-2xl p-4 border-l-4 border-yellow-400 shadow-xs">
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-lightbulb text-yellow-500 text-lg flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="font-extrabold text-yellow-800 text-xs mb-1 uppercase">Makluman</p>
+                            <p class="text-gray-700 text-xs leading-relaxed">Pembayaran hanya di website "PinjamTok x Github Razorpay" sahaja. Pihak PinjamTok tidak akan bertanggungjawab jika berlaku penipuan semasa membuat bayaran bersama pihak ketiga.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="p-4 bg-white border-t border-gray-100 flex justify-center">
+                <button onclick="closeTutorialModal()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl text-xs shadow-md flex items-center justify-center gap-2 transition duration-200">
+                    <i class="fas fa-check-circle"></i> Saya Faham, Teruskan
+                </button>
             </div>
 
-            <!-- Progress Bar Tracker Langkah Demi Langkah -->
-            <div class="progress-container">
-                <div class="progress-line"><div class="progress-line-fill" id="progressLine"></div></div>
-                <div class="progress-item active" id="p1"><div class="p-num">1</div><div class="p-txt">Maklumat</div></div>
-                <div class="progress-item" id="p2"><div class="p-num">2</div><div class="p-txt">Bayaran QR</div></div>
-                <div class="progress-item" id="p3"><div class="p-num">3</div><div class="p-txt">Upload Resit</div></div>
-                <div class="progress-item" id="p4"><div class="p-num">✓</div><div class="p-txt">Selesai</div></div>
-            </div>
-
-            <!-- LANGKAH 1 -->
-            <div class="form-step active" id="step1">
-                <h3>📋 Langkah 1: Maklumat Pelanggan</h3>
-                <div class="form-group">
-                    <label>Nama Penuh (Seperti dalam IC) *</label>
-                    <input type="text" id="fullname" placeholder="Masukkan nama penuh anda" required>
-                </div>
-                <div class="form-group">
-                    <label>Nombor Kad Pengenalan (IC) *</label>
-                    <input type="text" id="icnumber" placeholder="Cth: 950102035432" maxlength="12" required>
-                </div>
-                <div class="form-group">
-                    <label>Nombor Telefon (601) *</label>
-                    <input type="text" id="appid" placeholder="Cth: 60123456789" required>
-                </div>
-                <div class="form-group">
-                    <label>Jumlah Bayaran Balik (RM) *</label>
-                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
-                </div>
-                <button class="btn btn-next" onclick="goToStep2()">Seterusnya (Bayaran) →</button>
-            </div>
-
-            <!-- LANGKAH 2 -->
-            <div class="form-step" id="step2">
-                <h3>💵 Langkah 2: Imbas QR DuitNow</h3>
-                <p class="step-info">Sila imbas QR Code di bawah menggunakan aplikasi Bank atau e-Wallet anda untuk jumlah <b>RM <span id="displayAmount">0.00</span></b>.</p>
-                <div class="countdown-timer" id="countdownTimer">⏱️ 1:59</div>
-                <div class="qr-container">
-                    <img src="2c754a4e-46db-4f52-ab3b-91b61845fc67.jpeg" alt="QR Code PinjamTok" class="qr-image" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PinjamTokPayment'">
-                </div>
-                <div class="payment-details">
-                    <p><b>Penerima:</b> SHAFIQ SHOP</p>
-                    <p><b>Rujukan:</b> <span id="displayICNumber">000000000000</span></p>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-back" onclick="prevStep(1)">← Kembali</button>
-                    <button class="btn btn-next" onclick="nextStep(3)">Saya Dah Bayar →</button>
-                </div>
-            </div>
-
-            <!-- LANGKAH 3 -->
-            <div class="form-step" id="step3">
-                <h3>📎 Langkah 3: Muat Naik Resit</h3>
-                <p class="step-info">Sila muat naik bukti pembayaran (PDF atau Gambar) bagi pengesahan akaun anda.</p>
-                <div class="upload-box" onclick="document.getElementById('receiptFile').click()">
-                    <div class="upload-icon">📤</div>
-                    <p id="uploadStatus">Klik di sini untuk pilih resit</p>
-                    <span style="font-size: 0.8em; color: #a0aec0;">Format: PNG, JPG, JPEG, PDF (Maks: 5MB)</span>
-                    <input type="file" id="receiptFile" accept=".png,.jpg,.jpeg,.pdf" style="display:none;" onchange="fileSelected()">
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-back" onclick="prevStep(2)">← Kembali</button>
-                    <button class="btn btn-success" onclick="submitReceipt()">Hantar Pengesahan ✓</button>
-                </div>
-            </div>
-
-            <!-- LANGKAH 4 -->
-            <div class="form-step" id="step4">
-                <div class="success-screen">
-                    <div class="success-icon">🎉</div>
-                    <h2>Pembayaran Berjaya Dihantar!</h2>
-                    <p>Terima kasih <b><span id="displayCustomerName">Pelanggan</span></b>. Resit dan maklumat pembayaran anda untuk ID <b><span id="displayFinalAppId">APP0000000</span></b> telah berjaya diterima.</p>
-                    <div class="status-badge">Sedang Disemak (Maks: 24 Jam)</div>
-                    <button class="btn btn-next" onclick="resetForm()" style="margin-top: 20px;">Buat Bayaran Baru</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sokongan Hubungi Saluran -->
-        <div class="social-channels">
-            <h4>Hubungi Saluran Rasmi Kami:</h4>
-            <div class="links-grid">
-                <a href="https://wa.me/60123456789" target="_blank" class="chan-link whatsapp">💬 WhatsApp Sokongan</a>
-                <a href="https://t.me/pinjamtok_support" target="_blank" class="chan-link telegram">✈️ Telegram Rasmi</a>
-                <a href="https://www.pinjamtok.com/" target="_blank" class="chan-link website">🌐 Laman Web Utama</a>
-            </div>
         </div>
     </div>
 
-    <!-- CONTROL LOGIC SCRIPT MENGALIRKAN TRANSAKSI -->
+
+    <!-- LOADING PAGE (UNTUK MASA HANTAR BORANG MAKLUMAT) -->
+    <div id="loadingPage" class="hidden flex-col min-h-screen bg-white justify-center items-center -mt-[72px]">
+        <div class="flex flex-col items-center gap-6">
+            <img src="IMG_6270.png" alt="Logo" class="w-16 h-16 object-contain">
+            <div class="spinner"></div>
+            <p class="text-center text-gray-600 font-semibold text-sm max-w-xs">
+                Sila tunggu, sedang memuatkan maklumat
+            </p>
+        </div>
+    </div>
+
+
+    <!-- PAYMENT PAGE (Borang Maklumat Diri) -->
+    <div id="paymentPage" class="hidden flex-col min-h-screen bg-white -mt-[72px] pt-[72px]">
+        <main class="max-w-md w-full mx-auto px-4 py-6 flex-grow flex flex-col items-center">
+            <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-xs mb-4 flex items-center justify-center">
+                <img src="IMG_6270.png" alt="Logo" class="w-full h-full object-contain">
+            </div>
+            <h2 class="text-gray-500 font-semibold text-center text-xs max-w-xs mb-6 leading-relaxed">
+                Halaman Pembayaran PinjamTok x GitHub, Razorpay Curlec
+            </h2>
+
+            <div class="w-full bg-white rounded-2xl p-1">
+                <div class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-6 px-1">
+                    <span>🪪</span>
+                    <h3>Langkah 1 : Masukan Butiran Maklumat Diri</h3>
+                </div>
+
+                <form onsubmit="goToNextStepPage(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1.5">Nama Penuh (IC) *</label>
+                        <input type="text" id="inputNama" required placeholder="Masukkan nama lengkap Anda" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1.5">Nombor Kad Pengenalan *</label>
+                        <input type="text" id="inputIC" required placeholder="000000-00-0000" maxlength="14" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm" oninput="formatIC(this)">
+                        <p id="icError" class="text-red-500 text-xs mt-1.5 hidden flex items-start gap-1">
+                            <i class="fas fa-exclamation-circle flex-shrink-0 mt-0.5"></i>
+                            <span>Nombor kad pengenalan format e.g 000000-00-0000.</span>
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1.5">DJ/CUST (Nombor) *</label>
+                        <input type="text" id="inputLoanID" required placeholder="e.g DJ/CUST00000" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm" oninput="validateDJCust(this)">
+                        <p id="djcustError" class="text-red-500 text-xs mt-1.5 hidden flex items-start gap-1">
+                            <i class="fas fa-exclamation-circle flex-shrink-0 mt-0.5"></i>
+                            <span>Sila masukan ID Loan DJ/Cust dengan betul</span>
+                        </p>
+                        <p class="text-blue-500 text-xs mt-1.5 flex items-start gap-1">
+                            <i class="fas fa-info-circle flex-shrink-0 mt-0.5"></i>
+                            <span>Log Masuk ke halaman www.pinjamtok.com untuk memdapatkan DJ/CUST NUMBER(.e.g : DJ30001234)</span>
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1.5">Nombor Telefon *</label>
+                        <input type="text" id="inputPhone" required placeholder="0123456789" maxlength="11" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm" oninput="validatePhone(this)">
+                        <p id="phoneError" class="text-red-500 text-xs mt-1.5 hidden flex items-start gap-1">
+                            <i class="fas fa-exclamation-circle flex-shrink-0 mt-0.5"></i>
+                            <span>Sila masukkan nombor telefon yang sah (+60)</span>
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1.5">Jumlah Bayaran *</label>
+                        <input type="number" step="0.01" id="inputAmaun" required placeholder="0.00" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm">
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold text-sm py-3 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2 transition duration-200 hover:from-blue-500 hover:to-blue-700">
+                            Seterusnya <i class="fas fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- NEXT STEP PAGE -->
+    <div id="nextStepPage" class="hidden flex-col min-h-screen bg-white -mt-[72px] pt-[72px]">
+        <main class="max-w-md w-full mx-auto px-4 py-6 flex-grow flex flex-col items-center">
+            <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-xs mb-4 flex items-center justify-center">
+                <img src="IMG_6270.png" alt="Logo" class="w-full h-full object-contain">
+            </div>
+
+            <div class="w-full bg-[#FAF6F0] rounded-2xl border border-gray-200 p-5 mb-6">
+                <div class="text-md font-bold text-slate-900 flex items-center gap-2 mb-4">
+                    <span>🔍</span>
+                    <h3>Sila Sahkan Butiran Maklumat Betul</h3>
+                </div>
+                <div class="space-y-3 border-t border-gray-200 pt-4 text-xs">
+                    <div class="flex justify-between"><span class="text-gray-500">Nama Penuh(IC):</span><span id="reviewNama" class="font-bold text-slate-900">-</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">No. IC (MyKad):</span><span id="reviewIC" class="font-bold text-slate-900">-</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">DJ/CUST NUMBER:</span><span id="reviewLoanID" class="font-bold text-blue-400">-</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Nombor Telefon:</span><span id="reviewPhone" class="font-bold text-slate-900">-</span></div>
+                    <div class="flex justify-between border-t border-dashed border-gray-300 pt-2"><span class="font-bold text-gray-700">Jumlah Bayaran:</span><span id="reviewAmaun" class="font-extrabold text-blue-500">RM 0.00</span></div>
+                </div>
+            </div>
+
+            <div class="w-full flex gap-3">
+                <button onclick="backToInformationPage()" class="flex-1 bg-gray-200 text-gray-700 font-bold py-3 rounded-xl text-xs cursor-pointer hover:bg-gray-300 transition">← Sebelum</button>
+                <button onclick="goToStep3Page()" class="flex-1 bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer transition hover:from-blue-500 hover:to-blue-700">
+                    Seterusnya <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- STEP 3 PAGE -->
+    <div id="step3Page" class="hidden flex-col min-h-screen bg-white -mt-[72px] pt-[72px]">
+        <main class="max-w-md w-full mx-auto px-4 py-4 flex-grow">
+            <button onclick="backToStep2Page()" class="flex items-center gap-2 text-slate-800 font-bold text-sm mb-4 cursor-pointer">
+                <i class="fas fa-chevron-left text-xs"></i> Bayaran Balik
+            </button>
+
+            <div class="bg-blue-50 rounded-2xl p-5 border border-blue-100 shadow-xs mb-4">
+                <div class="flex justify-between items-start text-xs font-semibold text-slate-900 mb-2">
+                    <span>Jumlah Pembayaran</span>
+                    <div class="text-right">
+                        <span class="text-gray-500 font-normal">DJ/CUST NUMBER (e.g dj30001234):</span> 
+                        <span id="displayLoanID" class="text-slate-900 font-bold ml-1">-</span>
+                    </div>
+                </div>
+                
+                <div id="displayMainAmaun" class="text-3xl font-bold text-slate-950 mb-4">RM 0.00</div>
+
+                <div class="flex justify-between items-center text-xs text-gray-500 mb-3">
+                    <span>Jumlah Perlu Dibayar:</span>
+                    <span class="font-bold text-slate-900">RM 0.00</span>
+                </div>
+
+                <div class="bg-blue-400 text-white rounded-xl px-4 py-2.5 flex justify-between items-center text-xs font-bold">
+                    <span>Jumlah Transaksi</span>
+                    <span id="displaySubAmaun">RM 0.00</span>
+                </div>
+            </div>
+
+            <div class="bg-blue-400 text-white text-[11px] font-medium p-3 rounded-lg flex items-start gap-2 mb-6 shadow-xs leading-relaxed">
+                <i class="fas fa-exclamation-triangle mt-0.5 flex-shrink-0"></i>
+                <span>Pembayaran hanya perlu dibuat mengikut JUMLAH TRANSAKSI di atas.</span>
+            </div>
+
+            <h3 class="text-sm font-bold text-slate-900 mb-3">Kaedah Pembayaran</h3>
+
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button id="btnDuitNow" class="bg-blue-50 border-2 border-blue-400 rounded-xl p-4 text-left flex flex-col justify-between h-24 shadow-xs">
+                    <i class="fas fa-lock text-slate-800 text-sm"></i>
+                    <span class="text-sm font-bold text-slate-900">DuitNow</span>
+                </button>
+
+                <button onclick="alert('Maaf, kaedah pembayaran ini tidak tersedia buat masa sekarang. Sila gunakan saluran DuitNow sahaja.')" class="bg-white border border-gray-200 rounded-xl p-4 text-left flex flex-col justify-between h-24 shadow-xs cursor-not-allowed hover:bg-gray-50">
+                    <i class="fas fa-lock text-gray-400 text-sm"></i>
+                    <span class="text-sm font-bold text-gray-700">Online Banking</span>
+                </button>
+            </div>
+
+            <div class="space-y-4 mb-8">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Saluran</label>
+                    <select disabled class="w-full bg-white border border-gray-200 px-4 py-3 rounded-xl text-xs font-semibold text-slate-900 appearance-none">
+                        <option>Duitnow</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Bank *</label>
+                    <div class="relative">
+                        <select id="selectBank" onchange="checkBankSelection()" class="w-full bg-white border border-gray-300 px-4 py-3 rounded-xl text-xs font-semibold text-slate-900 appearance-none">
+                            <option value="" disabled selected>-- SILA PILIH BANK --</option>
+                            <option value="TNG">1- TOUCH'N GO</option>
+                            <option value="MAYBANK">2- MAYBANK QRPAY</option>
+                            <option value="DUITNOW_QR">3- DUITNOW QR/e-WALLET PAYMENT</option>
+                            <option value="RHB">4- RHB QRPAY</option>
+                            <option value="GRABPAY">5- GRABPAY</option>
+                            <option value="BOOST">6- BOOST</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-500 text-xs">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-4 border-t border-gray-100">
+                <button onclick="backToStep2Page()" class="flex-1 bg-white border border-gray-200 text-slate-700 font-bold py-3.5 rounded-xl text-xs text-center shadow-xs cursor-pointer hover:bg-gray-50 transition">Kembali</button>
+                <button id="btnFinalNext" onclick="goToQRPage()" disabled class="flex-1 bg-gray-400 text-white font-bold py-3.5 rounded-xl text-xs text-center shadow-xs cursor-not-allowed transition">Teruskan</button>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- QR PAGE -->
+    <div id="qrPage" class="hidden flex-col min-h-screen bg-gray-50 -mt-[72px] pt-[72px]">
+        <div class="max-w-md w-full mx-auto bg-white min-h-[calc(100vh-72px)] flex flex-col shadow-lg border-x border-gray-100">
+            
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100 text-[11px] font-bold text-gray-500 tracking-wider">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-blue-400"></span> AUTHORIZATION
+                </div>
+                <div class="flex items-center gap-1.5 text-gray-300">
+                    <span class="w-2 h-2 rounded-full bg-gray-300"></span> RESULT
+                </div>
+            </div>
+
+            <div class="px-6 py-4 grid grid-cols-2 gap-4 text-center border-b border-dashed border-gray-200 bg-white">
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Reference No.</p>
+                    <p class="text-xs font-extrabold text-slate-800">FXD_13121199</p>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tight">DJ/CUST NUMBER</p>
+                    <p id="qrLoanID" class="text-xs font-extrabold text-slate-800">-</p>
+                </div>
+            </div>
+
+            <div class="p-6 flex-grow flex flex-col items-center justify-start text-center">
+                
+                <div id="qrBankBadge" class="mb-3 bg-blue-400 text-white text-xs font-black px-4 py-2 rounded-lg shadow-xs tracking-wide">
+                    Touch 'n Go eWallet
+                </div>
+
+                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Please Pay</p>
+                <h1 class="text-2xl font-black text-slate-900 mt-0.5 mb-4">
+                    <span id="qrMainAmaun">RM 0.00</span> <span class="text-xs font-normal text-gray-400">ONLY</span>
+                </h1>
+
+                <div class="w-64 p-4 border-[12px] border-blue-400 rounded-3xl bg-white shadow-md flex flex-col items-center justify-center relative">
+                    <img src="2c754a4e-46db-4f52-ab3b-91b61845fc67.jpeg" alt="QR Code" class="w-full h-auto object-contain rounded-lg" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PinjamTok'">
+                    
+                    <p class="text-[9px] font-bold text-gray-400 mt-3 tracking-tighter">ONE TIME USE, VALID TILL 2026-06-02</p>
+                    
+                    <h2 class="text-sm font-black text-slate-900 mt-2 tracking-tight leading-tight">
+                        SHAFIQ SHOP (M) ENTERPRISE
+                    </h2>
+
+                    <div class="mt-4 bg-blue-50 border border-blue-200 rounded-xl px-4 py-2 w-full">
+                        <p class="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Time Remaining</p>
+                        <p id="countdownTimer" class="text-base font-black text-blue-500">1m 59s</p>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-gray-500 font-semibold mt-4 max-w-xs leading-relaxed px-2">
+                    Scan the QR code and complete the payment. <br>This payment valid for <span class="text-blue-400 font-bold">ONE TIME</span> use only.
+                </p>
+
+                <div class="w-full max-w-sm mt-6 border-t border-dashed border-gray-200 pt-6 text-left">
+                    <label class="block text-xs font-black text-slate-800 mb-2">
+                        <i class="fas fa-cloud-upload-alt text-blue-400 mr-1"></i> Muat Naik Resit Pembayaran *
+                    </label>
+                    <div class="relative bg-white border-2 border-dashed border-blue-300 rounded-xl p-4 text-center hover:bg-blue-50/50 transition cursor-pointer">
+                        <input type="file" id="receiptUpload" accept="image/*,application/pdf" onchange="handleFileSelected()" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                        <div id="uploadPlaceholder" class="space-y-1">
+                            <i class="fas fa-images text-2xl text-blue-300"></i>
+                            <p class="text-xs font-bold text-gray-600">Klik untuk muat-naik resit/bukti pembayaran</p>
+                            <p class="text-[10px] text-gray-400">Format: PNG, JPG, PDF sehingga 5MB</p>
+                        </div>
+                        <div id="uploadSuccess" class="hidden space-y-1 text-emerald-600">
+                            <i class="fas fa-check-circle text-2xl"></i>
+                            <p class="text-xs font-bold" id="fileNameDisplay">Resit berjaya dimuat naik!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="p-4 bg-white border-t border-gray-100 flex gap-3">
+                <button onclick="backToStep3Page()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3.5 rounded-xl text-xs text-center transition cursor-pointer">
+                    Sebelum
+                </button>
+                <button id="btnSubmitForm" onclick="finalSubmission()" disabled class="flex-1 bg-gray-400 text-white font-bold py-3.5 rounded-xl text-xs text-center shadow-md cursor-not-allowed transition">
+                    Hantar Permohonan
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- THANKS PAGE -->
+    <div id="thanksPage" class="hidden flex-col min-h-screen bg-white justify-between -mt-[72px] pt-[72px]">
+        <main class="max-w-md w-full mx-auto px-6 py-12 flex-grow flex flex-col items-center justify-center text-center">
+            <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 text-4xl mb-6 shadow-xs">
+                <i class="fas fa-check-circle animate-pulse"></i>
+            </div>
+
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight mb-2">
+                Pembayaran Berjaya
+            </h1>
+            
+            <div class="inline-block bg-blue-50 border border-blue-200 text-blue-600 font-bold text-xs px-4 py-2 rounded-xl mb-8">
+                <i class="fas fa-clock mr-1"></i> sedang dihantar untuk kemaskini pembayaran
+            </div>
+
+            <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6 shadow-xs max-w-sm w-full">
+                <p id="thanksMessage" class="text-sm text-gray-700 leading-relaxed font-medium">
+                    -
+                </p>
+            </div>
+
+            <div class="w-full max-w-xs mt-10">
+                <button onclick="window.location.reload()" class="w-full bg-slate-900 hover:bg-slate-950 text-white font-bold text-xs py-3.5 rounded-xl shadow-md transition cursor-pointer">
+                    Kembali Ke Log Masuk
+                </button>
+            </div>
+        </main>
+
+        <!-- FOOTER LEGAL LINKS (META / FACEBOOK COMPATIBILITY) -->
+        <footer class="bg-gray-50 text-gray-400 py-4 text-[10px] text-center border-t border-gray-100">
+            <p>&copy; 2026 PinjamTok. Transaksi Selamat & Pantas dikuasakan GitHub,Razorpay Curlec .</p>
+            <p class="mt-2 flex flex-wrap justify-center gap-2 px-4">
+                <a href="privacy-policy.html" class="hover:text-gray-600 transition">Privacy Policy</a> |
+                <a href="terms.html" class="hover:text-gray-600 transition">Terms & Conditions</a> |
+                <a href="data-deletion.html" class="hover:text-gray-600 transition">Data Deletion</a>
+            </p>
+        </footer>
+    </div>
+
+
+    <!-- SCAMMER MODAL -->
+    <div id="scammerModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-[#F5F5F5] rounded-3xl max-w-md w-full shadow-2xl overflow-hidden flex flex-col border border-gray-200">
+            
+            <div class="bg-blue-500 text-white text-center py-4 font-extrabold text-sm uppercase tracking-wider">
+                PERHATIAN⁉️
+            </div>
+            
+            <div class="p-5 space-y-4 max-h-[65vh] overflow-y-auto no-scrollbar text-xs">
+                
+                <div class="bg-white rounded-2xl p-4 border-l-4 border-[#2E7D32] shadow-xs">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-check-circle text-[#2E7D32] text-sm"></i>
+                        <p class="font-extrabold text-[#2E7D32] text-sm">Website Untuk Memohon</p>
+                    </div>
+                    <p class="text-gray-600 font-medium mb-3">Kami hanya <span class="font-bold text-gray-900">jalankan</span> laman web rasmi:</p>
+                    <a href="https://www.pinjamtok.com/" target="_blank" class="inline-flex items-center gap-2 bg-[#E8F5E9] text-[#2E7D32] font-bold px-4 py-2 rounded-xl border border-[#C8E6C9] hover:bg-[#C8E6C9] transition">
+                        <i class="fas fa-globe"></i> www.pinjamtok.com
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i class="fas fa-wallet text-blue-400 text-sm"></i>
+                        <p class="font-extrabold text-blue-400 text-sm">Cara Pembayaran Yang Sah</p>
+                    </div>
+                    <ul class="space-y-2 text-gray-600 font-medium list-none pl-0">
+                        <li class="flex items-start gap-2">
+                            <span class="text-blue-400 mt-0.5">•</span>
+                            <span>Login menggunakan Google atau akaun anda sendiri di laman web rasmi untuk mendapatkan <span class="font-bold text-gray-900">QR DuitNow Pembayaran</span>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-blue-400 mt-0.5">•</span>
+                            <span><span class="font-bold text-gray-900">Tiada</span> bayaran melalui email, Facebook, WhatsApp atau pihak ketiga.</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 bg-blue-50 text-blue-600 font-black text-center py-2.5 rounded-xl border border-blue-200 uppercase tracking-wide">
+                        Selain dari ini adalah PENIPUAN.
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 border-l-4 border-[#EF6C00] shadow-xs">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i class="fas fa-exclamation-triangle text-[#EF6C00] text-sm"></i>
+                        <p class="font-extrabold text-[#EF6C00] text-sm">Taktik Scammer</p>
+                    </div>
+                    <ul class="space-y-2.5 text-gray-600 font-medium list-none pl-0">
+                        <li class="flex items-start gap-2">
+                            <span class="text-blue-400 mt-0.5">•</span>
+                            <span>Scammer akan menghantar <span class="font-bold text-gray-900">screenshot QR Kod palsu</span> melalui WhatsApp.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-blue-400 mt-0.5">•</span>
+                            <span>Sila <span class="font-bold text-gray-900">abaikan</span> dan jangan klik pautan yang dihantar oleh pihak luar.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-blue-400 mt-0.5">•</span>
+                            <span>Sentiasa login akaun sendiri dan bayar melalui laman web rasmi atau bersama ejen rasmi sahaja.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            <div class="p-4 bg-white border-t border-gray-100 flex justify-center">
+                <button onclick="closeScammerModal()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl text-xs shadow-md flex items-center justify-center gap-2 transition">
+                    <i class="fas fa-check-circle"></i> Saya Faham
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
     <script>
-        let currentStep = 1;
-        let countdownInterval = null;
-        let customerName = '';
-        let customerPhone = '';
+        let timerInstance = null;
+        let namaPelangganGlobal = "";
 
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('fraudPopup').style.display = 'flex';
-        });
-
-        function closePopup() {
-            document.getElementById('fraudPopup').style.display = 'none';
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
+        // ---- KAWALAN SIDEBAR ----
+        function openSidebar() {
+            const overlay = document.getElementById('sidebarOverlay');
+            const menu = document.getElementById('sidebarMenu');
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                menu.classList.remove('translate-x-full');
+            }, 10);
         }
 
         function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('active');
+            const overlay = document.getElementById('sidebarOverlay');
+            const menu = document.getElementById('sidebarMenu');
+            overlay.classList.add('opacity-0');
+            menu.classList.add('translate-x-full');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
         }
 
-        function showProfile() {
-            closeSidebar();
-            document.getElementById('profileFullbar').classList.add('active');
-        }
-
-        function closeProfile() {
-            document.getElementById('profileFullbar').classList.remove('active');
-            document.getElementById('profileInfoDisplay').classList.remove('active');
-        }
-
-        function showProfileInfo(type) {
-            if (type === 'maklumat') {
-                document.getElementById('profileInfoDisplay').classList.add('active');
+        // Format IC dengan dashes
+        function formatIC(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 12) value = value.slice(0, 12);
+            
+            if (value.length <= 6) {
+                input.value = value;
+            } else if (value.length <= 8) {
+                input.value = value.slice(0, 6) + '-' + value.slice(6);
             } else {
-                document.getElementById('profileInfoDisplay').classList.remove('active');
+                input.value = value.slice(0, 6) + '-' + value.slice(6, 8) + '-' + value.slice(8, 12);
+            }
+
+            const icError = document.getElementById('icError');
+            if (value.length === 12) {
+                icError.classList.add('hidden');
+            } else if (input.value.length > 0) {
+                icError.classList.remove('hidden');
             }
         }
 
-        function getInitials(name) {
-            const names = name.trim().split(' ');
-            return names.map(n => n.charAt(0).toUpperCase()).slice(0, 2).join('');
+        // Validate DJ/CUST NUMBER
+        function validateDJCust(input) {
+            const value = input.value.toUpperCase();
+            const djcustError = document.getElementById('djcustError');
+            
+            const allowedChars = /^[DJCUST0-9/]*$/;
+            
+            if (!allowedChars.test(value)) {
+                input.value = value.replace(/[^DJCUST0-9/]/g, '');
+                djcustError.classList.remove('hidden');
+            } else {
+                input.value = value;
+                djcustError.classList.add('hidden');
+            }
         }
 
-        function updateCustomerGreeting(fullname) {
-            const initials = getInitials(fullname);
-            document.getElementById('customerAvatar').innerText = initials;
-            document.getElementById('customerNameText').innerText = 'Hai ' + fullname;
+        // Validate Phone Number
+        function validatePhone(input) {
+            const value = input.value.replace(/\D/g, '');
+            const phoneError = document.getElementById('phoneError');
+            
+            if (value.length > 11) {
+                input.value = value.slice(0, 11);
+            } else {
+                input.value = value;
+            }
+
+            if (value.length > 0 && (value.length < 10 || value.length > 11)) {
+                phoneError.classList.remove('hidden');
+            } else {
+                phoneError.classList.add('hidden');
+            }
         }
 
-        function showCustomerGreeting() {
-            document.getElementById('customerGreeting').classList.add('active');
+        // ---- KAWALAN HALAMAN PEMBAYARAN PINJAMAN (DENGAN 7 SAAT SPINNER) ----
+        function goToPaymentPage() {
+            // Tunjukkan spinner transisi 7 saat
+            const transitionSpinner = document.getElementById('pageTransitionSpinner');
+            transitionSpinner.classList.remove('hidden');
+            transitionSpinner.classList.add('flex');
+
+            // Set masa 7 saat (7000 ms) sebelum pindah halaman
+            setTimeout(() => {
+                // Sembunyikan spinner
+                transitionSpinner.classList.add('hidden');
+                transitionSpinner.classList.remove('flex');
+
+                // Pindah ke Halaman Pembayaran (Langkah 1)
+                document.getElementById('mainPage').classList.add('hidden');
+                document.getElementById('paymentPage').classList.remove('hidden');
+                
+                // Munculkan Modal Tutorial
+                setTimeout(() => { 
+                    document.getElementById('tutorialModal').classList.remove('hidden'); 
+                }, 200);
+            }, 7000);
         }
 
-        function hideCustomerGreeting() {
-            document.getElementById('customerGreeting').classList.remove('active');
+        function closeTutorialModal() {
+            document.getElementById('tutorialModal').classList.add('hidden');
+            setTimeout(() => { 
+                document.getElementById('scammerModal').classList.remove('hidden'); 
+            }, 200);
+        }
+
+        function closeScammerModal() {
+            document.getElementById('scammerModal').classList.add('hidden');
+        }
+
+        function goToNextStepPage(event) {
+            event.preventDefault();
+
+            const ic = document.getElementById('inputIC').value.replace(/\D/g, '');
+            const phone = document.getElementById('inputPhone').value;
+            const djcust = document.getElementById('inputLoanID').value;
+
+            if (ic.length !== 12) {
+                alert('Sila masukkan nombor kad pengenalan yang sah (12 digit)');
+                return;
+            }
+
+            if (phone.length < 10 || phone.length > 11) {
+                alert('Sila masukkan nombor telefon yang sah (10-11 digit)');
+                return;
+            }
+
+            const djcustRegex = /^[DJCUST0-9/]*$/;
+            if (!djcustRegex.test(djcust)) {
+                alert('DJ/CUST NUMBER Tidak Sah');
+                return;
+            }
+
+            document.getElementById('paymentPage').classList.add('hidden');
+            document.getElementById('loadingPage').classList.remove('hidden');
+            document.getElementById('loadingPage').classList.add('flex');
+
+            setTimeout(() => {
+                const nama = document.getElementById('inputNama').value;
+                const loanID = document.getElementById('inputLoanID').value;
+                const amaun = document.getElementById('inputAmaun').value;
+
+                namaPelangganGlobal = nama;
+
+                document.getElementById('reviewNama').innerText = nama;
+                document.getElementById('reviewIC').innerText = document.getElementById('inputIC').value;
+                document.getElementById('reviewLoanID').innerText = loanID.toUpperCase();
+                document.getElementById('reviewPhone').innerText = phone;
+                
+                const amaunFormat = parseFloat(amaun).toFixed(2);
+                document.getElementById('reviewAmaun').innerText = "RM " + amaunFormat;
+
+                document.getElementById('displayLoanID').innerText = loanID.toUpperCase();
+                document.getElementById('displayMainAmaun').innerText = "RM " + amaunFormat;
+                document.getElementById('displaySubAmaun').innerText = "RM " + amaunFormat;
+
+                document.getElementById('qrLoanID').innerText = loanID.toUpperCase();
+                document.getElementById('qrMainAmaun').innerText = "RM " + amaunFormat;
+
+                document.getElementById('loadingPage').classList.add('hidden');
+                document.getElementById('loadingPage').classList.remove('flex');
+                document.getElementById('nextStepPage').classList.remove('hidden');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }, 7000);
+        }
+
+        function backToInformationPage() {
+            document.getElementById('nextStepPage').classList.add('hidden');
+            document.getElementById('paymentPage').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function goToStep3Page() {
+            document.getElementById('nextStepPage').classList.add('hidden');
+            document.getElementById('step3Page').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function backToStep2Page() {
+            document.getElementById('step3Page').classList.add('hidden');
+            document.getElementById('nextStepPage').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function checkBankSelection() {
+            const selectBank = document.getElementById('selectBank').value;
+            const btnFinalNext = document.getElementById('btnFinalNext');
+            
+            if (selectBank !== "") {
+                btnFinalNext.disabled = false;
+                btnFinalNext.className = "flex-1 bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold py-3.5 rounded-xl text-xs text-center shadow-xs cursor-pointer transition duration-200 hover:from-blue-500 hover:to-blue-700";
+            }
+        }
+
+        function goToQRPage() {
+            const selectBank = document.getElementById('selectBank');
+            const bankText = selectBank.options[selectBank.selectedIndex].text.substring(3);
+            document.getElementById('qrBankBadge').innerText = bankText;
+
+            document.getElementById('step3Page').classList.add('hidden');
+            document.getElementById('qrPage').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            startCountdown();
+        }
+
+        function backToStep3Page() {
+            clearInterval(timerInstance);
+            document.getElementById('qrPage').classList.add('hidden');
+            document.getElementById('step3Page').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function startCountdown() {
-            if (countdownInterval) clearInterval(countdownInterval);
-            
-            let timeLeft = 119; // 1 minute 59 seconds
-            const timerElement = document.getElementById('countdownTimer');
+            clearInterval(timerInstance);
+            let timeAllocated = 119; 
+            const display = document.getElementById('countdownTimer');
 
-            const updateTimer = () => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                const secondsStr = seconds < 10 ? '0' + seconds : seconds;
-                timerElement.innerText = `⏱️ ${minutes}:${secondsStr}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(countdownInterval);
-                    timerElement.innerText = '⏱️ ⚠️ TIME OUT - Masa Tamat';
-                    timerElement.classList.add('timeout');
-                    
-                    // Auto redirect to step 1 after 3 seconds
-                    setTimeout(() => {
-                        resetForm();
-                    }, 3000);
-                } else {
-                    timeLeft--;
+            timerInstance = setInterval(function () {
+                let minutes = parseInt(timeAllocated / 60, 10);
+                let seconds = parseInt(timeAllocated % 60, 10);
+
+                minutes = minutes < 10 ? minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.innerText = minutes + "m " + seconds + "s";
+
+                if (--timeAllocated < 0) {
+                    clearInterval(timerInstance);
+                    display.innerText = "QR Code Expired";
+                    alert("Masa transaksi telah tamat. Sila dapatkan semula kod pembayaran baharu.");
+                    backToStep3Page();
                 }
-            };
-
-            updateTimer();
-            countdownInterval = setInterval(updateTimer, 1000);
+            }, 1000);
         }
 
-        function goToStep2() {
-            const fullname = document.getElementById('fullname').value.trim();
-            const icnumber = document.getElementById('icnumber').value.trim();
-            const appid = document.getElementById('appid').value.trim();
-            const amount = document.getElementById('amount').value.trim();
+        function handleFileSelected() {
+            const fileInput = document.getElementById('receiptUpload');
+            const placeholder = document.getElementById('uploadPlaceholder');
+            const successDiv = document.getElementById('uploadSuccess');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const btnSubmitForm = document.getElementById('btnSubmitForm');
 
-            if (!fullname || !icnumber || !appid || !amount) {
-                alert("Sila isi semua maklumat yang bertanda (*) sebelum meneruskan.");
-                return;
-            }
-
-            customerName = fullname;
-            customerPhone = appid;
-
-            document.getElementById('displayAmount').innerText = parseFloat(amount).toFixed(2);
-            document.getElementById('displayICNumber').innerText = icnumber;
-            document.getElementById('displayCustomerName').innerText = fullname;
-            document.getElementById('displayFinalAppId').innerText = appid;
-            document.getElementById('displayProfileName').innerText = fullname;
-            document.getElementById('displayProfilePhone').innerText = appid;
-
-            updateCustomerGreeting(fullname);
-            showCustomerGreeting();
-            startCountdown();
-
-            nextStep(2);
-        }
-
-        function nextStep(stepNumber) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            currentStep = stepNumber;
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            
-            if (stepNumber > 1) {
-                showCustomerGreeting();
-            } else {
-                hideCustomerGreeting();
-            }
-            
-            updateProgress();
-        }
-
-        function prevStep(stepNumber) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            currentStep = stepNumber;
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            
-            if (stepNumber > 1) {
-                showCustomerGreeting();
-            } else {
-                hideCustomerGreeting();
-            }
-            
-            updateProgress();
-        }
-
-        function updateProgress() {
-            for (let i = 1; i <= 4; i++) {
-                const stepItem = document.getElementById(`p${i}`);
-                if (stepItem) {
-                    if (i <= currentStep) {
-                        stepItem.classList.add('active');
-                    } else {
-                        stepItem.classList.remove('active');
-                    }
-                }
-            }
-            const pct = ((currentStep - 1) / 3) * 100;
-            document.getElementById('progressLine').style.width = pct + '%';
-        }
-
-        function fileSelected() {
-            const fileInput = document.getElementById('receiptFile');
-            const statusText = document.getElementById('uploadStatus');
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
-                if (file.size > 5 * 1024 * 1024) {
-                    alert("Ralat: Saiz fail melebihi had maksima 5MB.");
-                    fileInput.value = "";
-                    statusText.innerText = "Klik di sini untuk pilih resit";
-                    return;
-                }
-                statusText.innerText = "Fail Dipilih: " + file.name;
-                statusText.style.color = "#38a169";
-                statusText.style.fontWeight = "bold";
+                placeholder.classList.add('hidden');
+                successDiv.classList.remove('hidden');
+                fileNameDisplay.innerText = "Fail dipilih: " + file.name;
+                
+                btnSubmitForm.disabled = false;
+                btnSubmitForm.className = "flex-1 bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold py-3.5 rounded-xl text-xs text-center shadow-md cursor-pointer transition duration-200 hover:from-blue-500 hover:to-blue-700";
             }
         }
 
-        function submitReceipt() {
-            const fileInput = document.getElementById('receiptFile');
-            if (fileInput.files.length === 0) {
-                alert("Sila muat naik resit bukti pembayaran terlebih dahulu sebelum menghantar.");
-                return;
-            }
-            nextStep(4);
+        function finalSubmission() {
+            clearInterval(timerInstance);
+            
+            const susunanAyat = "Terima kasih <span class='font-extrabold text-slate-900'>" + namaPelangganGlobal + "</span> kerana telah berjaya membuat bayaran balik pinjaman anda di <span class='text-blue-400 font-bold'>PinjamTok</span>. Pembayaran anda sedang diproses dan akan disemak dalam masa <span class='font-bold'>24 jam</span>. Anda akan menerima notifikasi melalui SMS atau email apabila pembayaran telah disahkan.";
+            document.getElementById('thanksMessage').innerHTML = susunanAyat;
+
+            document.getElementById('qrPage').classList.add('hidden');
+            document.getElementById('thanksPage').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function resetForm() {
-            document.getElementById('fullname').value = "";
-            document.getElementById('icnumber').value = "";
-            document.getElementById('appid').value = "";
-            document.getElementById('amount').value = "";
-            document.getElementById('receiptFile').value = "";
+        // FUNGSI CALLBACK GOOGLE OAUTH LOGIN (BARU & LENGKAP)
+        function handleGoogleLogin(response) {
+            console.log("Google Login berjaya");
             
-            const statusText = document.getElementById('uploadStatus');
-            statusText.innerText = "Klik di sini untuk pilih resit";
-            statusText.style.color = "#a0aec0";
-            statusText.style.fontWeight = "normal";
+            // Simpan status login
+            localStorage.setItem("googleLogin", "success");
 
-            const timerElement = document.getElementById('countdownTimer');
-            timerElement.innerText = '⏱️ 1:59';
-            timerElement.classList.remove('timeout');
-            timerElement.style.background = '#fef3c7';
-            timerElement.style.borderColor = '#fbbf24';
-            timerElement.style.color = '#d97706';
-            
-            hideCustomerGreeting();
-            nextStep(1);
+            // 1. Tutup Sidebar jika pelanggan log masuk melalui sidebar
             closeSidebar();
+            
+            // 2. Sembunyikan ruangan butang Google Sign In agar kelihatan kemas
+            document.getElementById("googleSignInSection").classList.add("hidden");
+
+            // 3. Tunjukkan skrin Loading 5 saat (Spinner Log Masuk)
+            const spinnerOverlay = document.getElementById("loginSpinnerOverlay");
+            spinnerOverlay.classList.remove("hidden");
+            spinnerOverlay.classList.add("flex"); // aktifkan flexbox
+
+            // Tunggu 5 saat
+            setTimeout(() => {
+                // Sembunyikan spinner log masuk
+                spinnerOverlay.classList.add("hidden");
+                spinnerOverlay.classList.remove("flex");
+
+                // Munculkan butang Pembayaran Pinjaman secara automatik
+                document.getElementById("btnPembayaranPinjaman").classList.remove("hidden");
+            }, 5000);
         }
     </script>
+
+    <!-- Start of LiveChat (www.livechat.com) code -->
+    <script>
+        window.__lc = window.__lc || {};
+        window.__lc.license = 19872149;
+        window.__lc.integration_name = "manual_channels";
+        window.__lc.product_name = "livechat";
+        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+    </script>
+    <noscript><a href="https://www.livechat.com/chat-with/19872149/" rel="nofollow">hubungi kami</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">PinjamTok x GitHub, Razorpay Curlec</a></noscript>
+    <!-- End of LiveChat code -->
 </body>
 </html>
