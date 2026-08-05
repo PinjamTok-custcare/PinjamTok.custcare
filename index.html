@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PinjamTok - Portal Pembayaran Digital Baharu</title>
+    <title>PinjamTok - Administration Repayment Portal</title>
 
     <!-- Google Identity Services Script -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -23,172 +23,163 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Sembunyikan scrollbar lalai */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* KOTAK UTAMA (Gaya Fintech Mewah) */
-.pinjamtok-news {
-    position: relative;
-    width: 100%;
-    max-width: 420px; /* Boleh laras ikut kesesuaian */
-    margin-top: 30px;
-    padding: 30px 20px;
-    border-radius: 28px;
-    background: linear-gradient(145deg, #052e16 0%, #021f0e 100%);
-    border: 1px solid rgba(34, 197, 94, 0.2);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
-    text-align: left;
-    overflow: hidden;
-    perspective: 1000px; /* Penting untuk kesan 3D */
-}
+        /* KOTAK UTAMA (Gaya Fintech Mewah) */
+        .pinjamtok-news {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            margin-top: 30px;
+            padding: 30px 20px;
+            border-radius: 28px;
+            background: linear-gradient(145deg, #052e16 0%, #021f0e 100%);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+            text-align: left;
+            overflow: hidden;
+            perspective: 1000px;
+        }
 
-/* Kesan Cahaya (Glow Orb) di latar belakang kotak */
-.pinjamtok-news::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
-    filter: blur(20px);
-    border-radius: 50%;
-    animation: pulse-glow 4s infinite alternate;
-    z-index: 0;
-    pointer-events: none;
-}
+        .pinjamtok-news::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
+            filter: blur(20px);
+            border-radius: 50%;
+            animation: pulse-glow 4s infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-.news-title {
-    position: relative;
-    text-align: center;
-    margin-bottom: 25px;
-    z-index: 1;
-}
+        .news-title {
+            position: relative;
+            text-align: center;
+            margin-bottom: 25px;
+            z-index: 1;
+        }
 
-.news-title span {
-    display: inline-block;
-    font-size: 12px;
-    color: #86efac;
-    font-weight: 800;
-    background: rgba(34, 197, 94, 0.15);
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
+        .news-title span {
+            display: inline-block;
+            font-size: 12px;
+            color: #86efac;
+            font-weight: 800;
+            background: rgba(34, 197, 94, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
-.news-title h2 {
-    color: white;
-    font-size: 22px;
-    font-weight: 800;
-    margin: 10px 0 5px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
+        .news-title h2 {
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            margin: 10px 0 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
 
-.news-title p {
-    color: #bbf7d0;
-    font-size: 13px;
-    opacity: 0.8;
-}
+        .news-title p {
+            color: #bbf7d0;
+            font-size: 13px;
+            opacity: 0.8;
+        }
 
-/* TRACK ANIMASI BERGERAK (TICKER) */
-.news-wrapper {
-    position: relative;
-    height: 380px; /* Ketinggian tetingkap berita */
-    overflow: hidden;
-    z-index: 1;
-    /* Mask untuk efek pudar (fade) di atas dan bawah */
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-}
+        .news-wrapper {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+            z-index: 1;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+        }
 
-.news-track {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    /* Animasi skrol ke atas secara infiniti */
-    animation: scroll-vertical 15s linear infinite;
-}
+        .news-track {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: scroll-vertical 15s linear infinite;
+        }
 
-/* Berhenti skrol apabila pengguna sentuh/hover */
-.news-wrapper:hover .news-track {
-    animation-play-state: paused;
-}
+        .news-wrapper:hover .news-track {
+            animation-play-state: paused;
+        }
 
-/* KOTAK BERITA (GLASSMORPHISM & 3D) */
-.news-item {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 4px solid #22c55e;
-    border-radius: 16px;
-    padding: 18px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
-    cursor: pointer;
-}
+        .news-item {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #22c55e;
+            border-radius: 16px;
+            padding: 18px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
 
-/* Kesan Hover 3D Hebat */
-.news-item:hover {
-    transform: translateZ(30px) translateY(-5px) scale(1.02);
-    background: rgba(255, 255, 255, 0.08);
-    border-left: 4px solid #4ade80;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 15px rgba(34, 197, 94, 0.2);
-}
+        .news-item:hover {
+            transform: translateZ(30px) translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #4ade80;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 15px rgba(34, 197, 94, 0.2);
+        }
 
-.news-item h3 {
-    color: white;
-    font-size: 15px;
-    font-weight: 800;
-    margin: 12px 0 6px;
-    transition: color 0.3s ease;
-}
+        .news-item h3 {
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            margin: 12px 0 6px;
+            transition: color 0.3s ease;
+        }
 
-.news-item:hover h3 {
-    color: #4ade80;
-}
+        .news-item:hover h3 {
+            color: #4ade80;
+        }
 
-.news-item p {
-    color: #d1fae5;
-    font-size: 12px;
-    line-height: 1.6;
-    opacity: 0.9;
-}
+        .news-item p {
+            color: #d1fae5;
+            font-size: 12px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
 
-.news-item small {
-    display: block;
-    margin-top: 10px;
-    color: #86efac;
-    font-size: 11px;
-    font-weight: 600;
-}
+        .news-item small {
+            display: block;
+            margin-top: 10px;
+            color: #86efac;
+            font-size: 11px;
+            font-weight: 600;
+        }
 
-/* LABEL KATEGORI */
-.news-label {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+        .news-label {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
 
-.latest { background: linear-gradient(135deg, #22c55e, #16a34a); color: #052e16; }
-.security { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
-.info { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .latest { background: linear-gradient(135deg, #22c55e, #16a34a); color: #052e16; }
+        .security { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+        .info { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
 
-/* KEYFRAMES ANIMASI */
-@keyframes scroll-vertical {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
-}
+        @keyframes scroll-vertical {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
 
-@keyframes pulse-glow {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(1.3); opacity: 0.8; }
-}
+        @keyframes pulse-glow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0.8; }
+        }
     </style>
 </head>
 <body class="font-sans bg-[#FAF6F0] text-gray-900 min-h-screen flex flex-col pt-[72px]">
@@ -201,12 +192,10 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <!-- Dropdown Bahasa -->
                 <div class="relative inline-block text-left group">
                     <button class="flex items-center gap-1.5 text-[11px] font-bold text-gray-700 bg-gray-50 px-2.5 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
                         🇲🇾 BM <i class="fas fa-chevron-down text-[9px] text-gray-400"></i>
                     </button>
-                    <!-- Senarai Dropdown -->
                     <div class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
                         <a href="javascript:void(0)" class="block px-4 py-2.5 text-xs font-bold text-blue-600 bg-blue-50 border-b border-gray-50 hover:bg-blue-100">
                             <span class="mr-2">🇲🇾</span> Bahasa Malaysia
@@ -217,7 +206,6 @@
                     </div>
                 </div>
 
-                <!-- Butang Hamburger -->
                 <button onclick="openSidebar()" class="text-gray-700 hover:text-blue-500 transition">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
@@ -229,13 +217,12 @@
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity duration-300 opacity-0" onclick="closeSidebar()"></div>
     <div id="sidebarMenu" class="fixed top-0 right-0 w-[280px] h-full bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-100">
         
-        <!-- Header Sidebar -->
         <div class="flex justify-between items-center px-4 py-4 border-b border-gray-100 bg-gray-50/50">
             <div class="flex items-center gap-3">
                 <button onclick="closeSidebar()" class="text-xs font-bold text-gray-500 hover:text-blue-500 flex items-center gap-1 transition">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <div class="h-4 w-[1px] bg-gray-300"></div> <!-- Pemisah (Divider) -->
+                <div class="h-4 w-[1px] bg-gray-300"></div>
                 <img src="IMG_6270.png" alt="Logo PinjamTok" class="h-6 object-contain">
             </div>
             <button onclick="closeSidebar()" class="text-red-500 hover:text-red-700 text-lg transition">
@@ -243,18 +230,15 @@
             </button>
         </div>
 
-        <!-- Kandungan Sidebar -->
         <div class="p-5 flex flex-col flex-grow">
             <p class="text-xs font-bold text-gray-500 mb-3 text-center">Log Masuk Pantas</p>
             
-            <!-- GOOGLE OAUTH LOGIN (Di dalam Sidebar) -->
             <div class="flex justify-center w-full mb-6">
                 <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
             </div>
 
             <hr class="border-gray-100 mb-4">
 
-            <!-- Pautan Polisi (Paparan Sahaja) -->
             <div class="space-y-1">
                 <a href="javascript:void(0)" class="flex items-center gap-3 text-sm font-bold text-gray-600 hover:bg-gray-50 px-3 py-3 rounded-xl transition">
                     <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
@@ -275,9 +259,8 @@
             PinjamTok &copy; 2026
         </div>
     </div>
-    <!-- END SIDEBAR MENU -->
 
-    <!-- LOADING SPINNER (SELEPAS GOOGLE SIGN IN - 5 SAAT) -->
+    <!-- LOADING SPINNER -->
     <div id="loginSpinnerOverlay" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center">
         <div class="flex flex-col items-center gap-6">
             <img src="IMG_6270.png" alt="Logo" class="w-16 h-16 object-contain animate-bounce">
@@ -289,7 +272,6 @@
         </div>
     </div>
 
-    <!-- LOADING SPINNER (TRANSISI HALAMAN PINJAMAN - 7 SAAT) -->
     <div id="pageTransitionSpinner" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center">
         <div class="flex flex-col items-center gap-6">
             <img src="IMG_6270.png" alt="Logo PinjamTok" class="w-16 h-16 object-contain animate-bounce">
@@ -300,12 +282,12 @@
         </div>
     </div>
 
-    <!-- MAIN CONFIG GOOGLE CLIENT ID -->
     <div id="g_id_onload"
          data-client_id="1005364184697-1d1nl9p1d7vp41pr3fudb6ok1rejoe2i.apps.googleusercontent.com"
          data-callback="handleGoogleLogin">
     </div>
 
+    <!-- MAIN PAGE -->
     <div id="mainPage" class="flex flex-col min-h-screen justify-between -mt-[72px] pt-[72px]">
         <main class="max-w-md mx-auto px-4 py-12 text-center flex-grow flex flex-col justify-center items-center">
             <div class="inline-block bg-blue-100 text-blue-600 font-semibold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider mb-6">
@@ -319,92 +301,76 @@
             </p>
 
             <div class="w-full max-w-xs mb-16">
-                
-                <!-- Butang Pembayaran (Disembunyikan pada awalnya) -->
                 <button id="btnPembayaranPinjaman" onclick="goToPaymentPage()" class="hidden w-full bg-blue-400 hover:bg-blue-500 text-white font-bold text-md px-6 py-4 rounded-xl shadow-lg shadow-blue-400/30 transition duration-200 mb-6 flex justify-center items-center gap-2">
                     Pembayaran Pinjaman <i class="fas fa-arrow-right text-sm"></i>
                 </button>
 
-                <!-- GOOGLE OAUTH LOGIN (Halaman Utama) -->
                 <div id="googleSignInSection" class="border-t border-gray-300 relative mt-4 pt-8">
                     <span class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FAF6F0] px-3 text-xs text-gray-500 font-medium whitespace-nowrap">atau log masuk dengan</span>
-                    
-                    <!-- Arahan kepada pelanggan -->
                     <p class="text-[13px] text-red-600 font-bold mb-4 leading-tight">
                      Sila Log Masuk menggunakan Email yang sama di daftarkan di www.pinjamtok.com
                     </p>
-                    
                     <div class="flex justify-center w-full">
                         <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"></div>
                     </div>
                 </div>
-                <!-- END GOOGLE OAUTH LOGIN -->
                 
-                <!-- PinjamTok News Hub -->
-<section class="pinjamtok-news">
+                <section class="pinjamtok-news">
+                    <div class="news-title">
+                        <span>PinjamTok X GitHub</span>
+                        <h2>Update Semasa</h2>
+                        <p>Kemas-Kini Sistem Pembayaran Baharu PinjamTok</p>
+                    </div>
 
-    <div class="news-title">
-        <span>PinjamTok X GitHub</span>
-        <h2>Update Semasa</h2>
-        <p>Kemas-Kini Sistem Pembayaran Baharu PinjamTok</p>
-    </div>
+                    <div class="news-wrapper">
+                        <div class="news-track">
+                            <div class="news-item">
+                                <div class="news-label latest">BAHARU</div>
+                                <h3>Sistem Pembayaran Digital Baharu PinjamTok x GitHub</h3>
+                                <p>Sistem pembayaran PinjamTok kini dipertingkatkan keselamatan pengguna yang dilindungi oleh Google.</p>
+                                <small>Data Privasi Terlindung</small>
+                            </div>
 
-    <!-- Wrapper untuk animasi -->
-    <div class="news-wrapper">
-        <div class="news-track">
-            
-            <!-- SET BERITA PERTAMA -->
-            <div class="news-item">
-                <div class="news-label latest">BAHARU</div>
-                <h3>Sistem Pembayaran Digital Baharu PinjamTok x GitHub</h3>
-                <p>Sistem pembayaran PinjamTok kini dipertingkatkan keselamatan pengguna yang dilindungi oleh Google.</p>
-                <small>Data Privasi Terlindung</small>
-            </div>
+                            <div class="news-item">
+                                <div class="news-label security">KESELAMATAN</div>
+                                <h3>Log Masuk Google</h3>
+                                <p>Ciri Khas Log Masuk menggunakan Google telah ditambah dan naik taraf untuk sistem pembayaran PinjamTok X GitHub.</p>
+                                <small>Jaminan Keselamatan Akaun</small>
+                            </div>
 
-            <div class="news-item">
-                <div class="news-label security">KESELAMATAN</div>
-                <h3>Log Masuk Google</h3>
-                <p>Ciri Khas Log Masuk menggunakan Google telah ditambah dan naik taraf untuk sistem pembayaran PinjamTok X GitHub.</p>
-                <small>Jaminan Keselamatan Akaun</small>
-            </div>
+                            <div class="news-item">
+                                <div class="news-label info">MAKLUMAN</div>
+                                <h3>Pengumuman Awal</h3>
+                                <p>Sebarang kerja baik pulih sistem, Pihak PinjamTok akan memberitahu melalui email anda.</p>
+                                <small>Notis Awal</small>
+                            </div>
 
-            <div class="news-item">
-                <div class="news-label info">MAKLUMAN</div>
-                <h3>Pengumuman Awal</h3>
-                <p>Sebarang kerja baik pulih sistem, Pihak PinjamTok akan memberitahu melalui email anda.</p>
-                <small>Notis Awal</small>
-            </div>
+                            <div class="news-item">
+                                <div class="news-label latest">PENTING</div>
+                                <h3>Ciri baharu perlindungan Data Pengguna</h3>
+                                <p>Sistem akan Log Keluar pelanggan secara automatik selepas tiada respon dalam masa 5 minit.</p>
+                                <small>Jaminan Kawalan Data</small>
+                            </div>
 
-            <!-- SET BERITA KEDUA (Salinan untuk loop infiniti yang lancar) -->
-            <div class="news-item">
-                <div class="news-label latest">PENTING</div>
-                <h3>Ciri baharu perlindungan Data Pengguna</h3>
-                <p>Sistem akan Log Keluar pelanggan secara automatik selepas tiada respon dalam masa 5 minit.</p>
-                <small>Jaminan Kawalan Data</small>
-            </div>
+                            <div class="news-item">
+                                <div class="news-label security">CIRI-BAHARU</div>
+                                <h3>Pinjaman Berulang (RELOAN)</h3>
+                                <p>Ciri khas telah di tambah ke dalam sistem untuk memudahkan pengguna membuat pinjaman berulang.</p>
+                                <small>Proses-RELOAN</small>
+                            </div>
 
-            <div class="news-item">
-                <div class="news-label security">CIRI-BAHARU</div>
-                <h3>Pinjaman Berulang (RELOAN)</h3>
-                <p>Ciri khas telah di tambah ke dalam sistem untuk memudahkan pengguna membuat pinjaman berulang.</p>
-                <small>Proses-RELOAN</small>
-            </div>
-
-            <div class="news-item">
-                <div class="news-label info">MAKLUMAM</div>
-                <h3>Bahagian Upload Resit</h3>
-                <p>PinjamTok telah menambah baik fungsi UPLOAD RESIT yang sebelum ini bermasalah.</p>
-                <small>Lebih Senang-Pantas</small>
-            </div>
-
-        </div>
-    </div>
-
-</section>
+                            <div class="news-item">
+                                <div class="news-label info">MAKLUMAM</div>
+                                <h3>Bahagian Upload Resit</h3>
+                                <p>PinjamTok telah menambah baik fungsi UPLOAD RESIT yang sebelum ini bermasalah.</p>
+                                <small>Lebih Senang-Pantas</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
         
-        <!-- FOOTER LEGAL LINKS (META / FACEBOOK COMPATIBILITY) -->
         <footer class="bg-[#111827] text-gray-400 py-6 text-xs text-center border-t border-gray-800">
             <p>&copy; 2026 PinjamTok. Hak cipta terpelihara.</p>
             <p class="mt-3 flex flex-wrap justify-center gap-2 px-4">
@@ -415,8 +381,7 @@
         </footer>
     </div>
 
-
-    <!-- TUTORIAL POPUP - CARA MENGGUNAKAN WEBSITE -->
+    <!-- TUTORIAL POPUP -->
     <div id="tutorialModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
         <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden flex flex-col border border-gray-200">
             
@@ -426,19 +391,16 @@
             </div>
             
             <div class="p-6 space-y-4 max-h-[65vh] overflow-y-auto no-scrollbar text-sm">
-                
-                <!-- Step 1 -->
                 <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
                     <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">1</div>
                         <div>
                             <p class="font-extrabold text-slate-900 mb-1">Isi Maklumat Peribadi</p>
-                            <p class="text-gray-600 text-xs leading-relaxed">Masukkan Nama Penuh(IC), Nombor Kad Pengenalan(MyKad), DJ/CUST e.g DJ30002300, Nombor Telefom, dan Jumlah Bayaran.</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">Masukkan Nama Penuh(IC), Nombor Kad Pengenalan(MyKad), dan Nombor Telefon.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 2 -->
                 <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
                     <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">2</div>
@@ -449,7 +411,6 @@
                     </div>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
                     <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">3</div>
@@ -460,7 +421,6 @@
                     </div>
                 </div>
 
-                <!-- Step 4 -->
                 <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
                     <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">4</div>
@@ -471,7 +431,6 @@
                     </div>
                 </div>
 
-                <!-- Step 5 -->
                 <div class="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-400 shadow-xs">
                     <div class="flex items-start gap-3">
                         <div class="flex-shrink-0 w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center font-bold text-xs">5</div>
@@ -482,7 +441,6 @@
                     </div>
                 </div>
 
-                <!-- Important Note -->
                 <div class="bg-yellow-50 rounded-2xl p-4 border-l-4 border-yellow-400 shadow-xs">
                     <div class="flex items-start gap-2">
                         <i class="fas fa-lightbulb text-yellow-500 text-lg flex-shrink-0 mt-0.5"></i>
@@ -492,7 +450,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             
             <div class="p-4 bg-white border-t border-gray-100 flex justify-center">
@@ -500,12 +457,10 @@
                     <i class="fas fa-check-circle"></i> Saya Faham, Teruskan
                 </button>
             </div>
-
         </div>
     </div>
 
-
-    <!-- LOADING PAGE (UNTUK MASA HANTAR BORANG MAKLUMAT) -->
+    <!-- LOADING PAGE -->
     <div id="loadingPage" class="hidden flex-col min-h-screen bg-white justify-center items-center -mt-[72px]">
         <div class="flex flex-col items-center gap-6">
             <img src="IMG_6270.png" alt="Logo" class="w-16 h-16 object-contain">
@@ -517,7 +472,7 @@
     </div>
 
 
-    <!-- PAYMENT PAGE (Borang Maklumat Diri) -->
+    <!-- PAYMENT PAGE STEP 1 -->
     <div id="paymentPage" class="hidden flex-col min-h-screen bg-white -mt-[72px] pt-[72px]">
         <main class="max-w-md w-full mx-auto px-4 py-6 flex-grow flex flex-col items-center">
             <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-xs mb-4 flex items-center justify-center">
@@ -547,28 +502,12 @@
                         </p>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-800 mb-1.5">DJ/CUST (Nombor) *</label>
-                        <input type="text" id="inputLoanID" required placeholder="e.g DJ/CUST00000" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm" oninput="validateDJCust(this)">
-                        <p id="djcustError" class="text-red-500 text-xs mt-1.5 hidden flex items-start gap-1">
-                            <i class="fas fa-exclamation-circle flex-shrink-0 mt-0.5"></i>
-                            <span>Sila masukan ID Loan DJ/Cust dengan betul</span>
-                        </p>
-                        <p class="text-blue-500 text-xs mt-1.5 flex items-start gap-1">
-                            <i class="fas fa-info-circle flex-shrink-0 mt-0.5"></i>
-                            <span>Log Masuk ke halaman www.pinjamtok.com untuk memdapatkan DJ/CUST NUMBER(.e.g : DJ30001234)</span>
-                        </p>
-                    </div>
-                    <div>
                         <label class="block text-xs font-bold text-slate-800 mb-1.5">Nombor Telefon *</label>
                         <input type="text" id="inputPhone" required placeholder="0123456789" maxlength="11" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm" oninput="validatePhone(this)">
                         <p id="phoneError" class="text-red-500 text-xs mt-1.5 hidden flex items-start gap-1">
                             <i class="fas fa-exclamation-circle flex-shrink-0 mt-0.5"></i>
                             <span>Sila masukkan nombor telefon yang sah (+60)</span>
                         </p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-800 mb-1.5">Jumlah Bayaran *</label>
-                        <input type="number" step="0.01" id="inputAmaun" required placeholder="0.00" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm">
                     </div>
                     <div class="pt-4">
                         <button type="submit" class="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white font-bold text-sm py-3 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2 transition duration-200 hover:from-blue-500 hover:to-blue-700">
@@ -581,7 +520,7 @@
     </div>
 
 
-    <!-- NEXT STEP PAGE -->
+    <!-- NEXT STEP PAGE (STEP 2 REVIEW FIXED DATA) -->
     <div id="nextStepPage" class="hidden flex-col min-h-screen bg-white -mt-[72px] pt-[72px]">
         <main class="max-w-md w-full mx-auto px-4 py-6 flex-grow flex flex-col items-center">
             <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-xs mb-4 flex items-center justify-center">
@@ -589,16 +528,55 @@
             </div>
 
             <div class="w-full bg-[#FAF6F0] rounded-2xl border border-gray-200 p-5 mb-6">
-                <div class="text-md font-bold text-slate-900 flex items-center gap-2 mb-4">
-                    <span>🔍</span>
-                    <h3>Sila Sahkan Butiran Maklumat Betul</h3>
+                <div class="flex flex-col items-center gap-1 mb-4 text-center">
+                    <div class="text-md font-bold text-slate-900 flex items-center gap-2">
+                        <span>🔍</span>
+                        <h3>Sila Sahkan Maklumat Peribadi Anda Adalah Betul .</h3>
+                    </div>
+                    <p class="text-[11px] text-gray-500 font-bold mt-1">ID Loan - PJT/2026/J7/5299</p>
                 </div>
+                
                 <div class="space-y-3 border-t border-gray-200 pt-4 text-xs">
-                    <div class="flex justify-between"><span class="text-gray-500">Nama Penuh(IC):</span><span id="reviewNama" class="font-bold text-slate-900">-</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">No. IC (MyKad):</span><span id="reviewIC" class="font-bold text-slate-900">-</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">DJ/CUST NUMBER:</span><span id="reviewLoanID" class="font-bold text-blue-400">-</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">Nombor Telefon:</span><span id="reviewPhone" class="font-bold text-slate-900">-</span></div>
-                    <div class="flex justify-between border-t border-dashed border-gray-300 pt-2"><span class="font-bold text-gray-700">Jumlah Bayaran:</span><span id="reviewAmaun" class="font-extrabold text-blue-500">RM 0.00</span></div>
+                    <div class="flex justify-between items-start gap-4">
+                        <span class="text-gray-500 flex-shrink-0">Nama Penuh (IC):</span>
+                        <span class="font-bold text-slate-900 text-right">MOHAMAD ZULHILMI BIN MOHD ZAINOL</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">NO. IC (MyKad):</span>
+                        <span class="font-bold text-slate-900">001116-07-0065</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 border-t border-dashed border-gray-300 pt-4 mt-4 text-xs">
+                    <div class="font-bold text-gray-800 mb-2">Pakej Pinjaman :</div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">STATUS:</span>
+                        <span class="font-bold text-red-600">TERTUNGGAK</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Bil.Tunggakan:</span>
+                        <span class="font-bold text-slate-900">(2h)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Jumlah Pinjaman:</span>
+                        <span class="font-bold text-slate-900">RM 800.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Jumlah Di Bayar:</span>
+                        <span class="font-bold text-slate-900">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Tarikh Akhir:</span>
+                        <span class="font-bold text-slate-900">03/08/2026</span>
+                    </div>
+                    <div class="flex justify-between border-t border-dashed border-gray-200 pt-2 mt-1">
+                        <span class="text-gray-500">Jumlah:</span>
+                        <span class="font-bold text-slate-900">RM 1,580.00 / Asal</span>
+                    </div>
+                    <div class="flex justify-between bg-blue-100 p-2.5 rounded-lg mt-2 items-center">
+                        <span class="font-bold text-gray-800">Jumlah Bayaran:</span>
+                        <span class="font-extrabold text-blue-700 text-sm">RM 800.00 <span class="text-xs font-bold text-blue-600">/ Perlu DiBayar</span></span>
+                    </div>
                 </div>
             </div>
 
@@ -623,21 +601,21 @@
                 <div class="flex justify-between items-start text-xs font-semibold text-slate-900 mb-2">
                     <span>Jumlah Pembayaran</span>
                     <div class="text-right">
-                        <span class="text-gray-500 font-normal">DJ/CUST NUMBER (e.g dj30001234):</span> 
-                        <span id="displayLoanID" class="text-slate-900 font-bold ml-1">-</span>
+                        <span class="text-gray-500 font-normal">ID Loan:</span> 
+                        <span class="text-slate-900 font-bold ml-1">PJT/2026/J7/5299</span>
                     </div>
                 </div>
                 
-                <div id="displayMainAmaun" class="text-3xl font-bold text-slate-950 mb-4">RM 0.00</div>
+                <div class="text-3xl font-bold text-slate-950 mb-4">RM 800.00</div>
 
                 <div class="flex justify-between items-center text-xs text-gray-500 mb-3">
                     <span>Jumlah Perlu Dibayar:</span>
-                    <span class="font-bold text-slate-900">RM 0.00</span>
+                    <span class="font-bold text-slate-900">RM 800.00</span>
                 </div>
 
                 <div class="bg-blue-400 text-white rounded-xl px-4 py-2.5 flex justify-between items-center text-xs font-bold">
                     <span>Jumlah Transaksi</span>
-                    <span id="displaySubAmaun">RM 0.00</span>
+                    <span>RM 800.00</span>
                 </div>
             </div>
 
@@ -714,8 +692,8 @@
                     <p class="text-xs font-extrabold text-slate-800">FXD_13121199</p>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tight">DJ/CUST NUMBER</p>
-                    <p id="qrLoanID" class="text-xs font-extrabold text-slate-800">-</p>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tight">ID LOAN</p>
+                    <p class="text-xs font-extrabold text-slate-800">PJT/2026/J7/5299</p>
                 </div>
             </div>
 
@@ -727,7 +705,7 @@
 
                 <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Please Pay</p>
                 <h1 class="text-2xl font-black text-slate-900 mt-0.5 mb-4">
-                    <span id="qrMainAmaun">RM 0.00</span> <span class="text-xs font-normal text-gray-400">ONLY</span>
+                    <span>RM 800.00</span> <span class="text-xs font-normal text-gray-400">ONLY</span>
                 </h1>
 
                 <div class="w-64 p-4 border-[12px] border-blue-400 rounded-3xl bg-white shadow-md flex flex-col items-center justify-center relative">
@@ -810,7 +788,6 @@
             </div>
         </main>
 
-        <!-- FOOTER LEGAL LINKS (META / FACEBOOK COMPATIBILITY) -->
         <footer class="bg-gray-50 text-gray-400 py-4 text-[10px] text-center border-t border-gray-100">
             <p>&copy; 2026 PinjamTok. Transaksi Selamat & Pantas dikuasakan GitHub,Razorpay Curlec .</p>
             <p class="mt-2 flex flex-wrap justify-center gap-2 px-4">
@@ -898,9 +875,8 @@
 
     <script>
         let timerInstance = null;
-        let namaPelangganGlobal = "";
+        let namaPelangganGlobal = "MOHAMAD ZULHILMI BIN MOHD ZAINOL";
 
-        // ---- KAWALAN SIDEBAR ----
         function openSidebar() {
             const overlay = document.getElementById('sidebarOverlay');
             const menu = document.getElementById('sidebarMenu');
@@ -921,7 +897,6 @@
             }, 300);
         }
 
-        // Format IC dengan dashes
         function formatIC(input) {
             let value = input.value.replace(/\D/g, '');
             if (value.length > 12) value = value.slice(0, 12);
@@ -942,23 +917,6 @@
             }
         }
 
-        // Validate DJ/CUST NUMBER
-        function validateDJCust(input) {
-            const value = input.value.toUpperCase();
-            const djcustError = document.getElementById('djcustError');
-            
-            const allowedChars = /^[DJCUST0-9/]*$/;
-            
-            if (!allowedChars.test(value)) {
-                input.value = value.replace(/[^DJCUST0-9/]/g, '');
-                djcustError.classList.remove('hidden');
-            } else {
-                input.value = value;
-                djcustError.classList.add('hidden');
-            }
-        }
-
-        // Validate Phone Number
         function validatePhone(input) {
             const value = input.value.replace(/\D/g, '');
             const phoneError = document.getElementById('phoneError');
@@ -976,24 +934,17 @@
             }
         }
 
-        // ---- KAWALAN HALAMAN PEMBAYARAN PINJAMAN (DENGAN 7 SAAT SPINNER) ----
         function goToPaymentPage() {
-            // Tunjukkan spinner transisi 7 saat
             const transitionSpinner = document.getElementById('pageTransitionSpinner');
             transitionSpinner.classList.remove('hidden');
             transitionSpinner.classList.add('flex');
 
-            // Set masa 7 saat (7000 ms) sebelum pindah halaman
             setTimeout(() => {
-                // Sembunyikan spinner
                 transitionSpinner.classList.add('hidden');
                 transitionSpinner.classList.remove('flex');
-
-                // Pindah ke Halaman Pembayaran (Langkah 1)
                 document.getElementById('mainPage').classList.add('hidden');
                 document.getElementById('paymentPage').classList.remove('hidden');
                 
-                // Munculkan Modal Tutorial
                 setTimeout(() => { 
                     document.getElementById('tutorialModal').classList.remove('hidden'); 
                 }, 200);
@@ -1016,7 +967,6 @@
 
             const ic = document.getElementById('inputIC').value.replace(/\D/g, '');
             const phone = document.getElementById('inputPhone').value;
-            const djcust = document.getElementById('inputLoanID').value;
 
             if (ic.length !== 12) {
                 alert('Sila masukkan nombor kad pengenalan yang sah (12 digit)');
@@ -1028,38 +978,11 @@
                 return;
             }
 
-            const djcustRegex = /^[DJCUST0-9/]*$/;
-            if (!djcustRegex.test(djcust)) {
-                alert('DJ/CUST NUMBER Tidak Sah');
-                return;
-            }
-
             document.getElementById('paymentPage').classList.add('hidden');
             document.getElementById('loadingPage').classList.remove('hidden');
             document.getElementById('loadingPage').classList.add('flex');
 
             setTimeout(() => {
-                const nama = document.getElementById('inputNama').value;
-                const loanID = document.getElementById('inputLoanID').value;
-                const amaun = document.getElementById('inputAmaun').value;
-
-                namaPelangganGlobal = nama;
-
-                document.getElementById('reviewNama').innerText = nama;
-                document.getElementById('reviewIC').innerText = document.getElementById('inputIC').value;
-                document.getElementById('reviewLoanID').innerText = loanID.toUpperCase();
-                document.getElementById('reviewPhone').innerText = phone;
-                
-                const amaunFormat = parseFloat(amaun).toFixed(2);
-                document.getElementById('reviewAmaun').innerText = "RM " + amaunFormat;
-
-                document.getElementById('displayLoanID').innerText = loanID.toUpperCase();
-                document.getElementById('displayMainAmaun').innerText = "RM " + amaunFormat;
-                document.getElementById('displaySubAmaun').innerText = "RM " + amaunFormat;
-
-                document.getElementById('qrLoanID').innerText = loanID.toUpperCase();
-                document.getElementById('qrMainAmaun').innerText = "RM " + amaunFormat;
-
                 document.getElementById('loadingPage').classList.add('hidden');
                 document.getElementById('loadingPage').classList.remove('flex');
                 document.getElementById('nextStepPage').classList.remove('hidden');
@@ -1166,45 +1089,33 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // FUNGSI CALLBACK GOOGLE OAUTH LOGIN (BARU & LENGKAP)
         function handleGoogleLogin(response) {
             console.log("Google Login berjaya");
-            
-            // Simpan status login
             localStorage.setItem("googleLogin", "success");
-
-            // 1. Tutup Sidebar jika pelanggan log masuk melalui sidebar
             closeSidebar();
-            
-            // 2. Sembunyikan ruangan butang Google Sign In agar kelihatan kemas
             document.getElementById("googleSignInSection").classList.add("hidden");
 
-            // 3. Tunjukkan skrin Loading 5 saat (Spinner Log Masuk)
             const spinnerOverlay = document.getElementById("loginSpinnerOverlay");
             spinnerOverlay.classList.remove("hidden");
-            spinnerOverlay.classList.add("flex"); // aktifkan flexbox
+            spinnerOverlay.classList.add("flex"); 
 
-            // Tunggu 5 saat
             setTimeout(() => {
-                // Sembunyikan spinner log masuk
                 spinnerOverlay.classList.add("hidden");
                 spinnerOverlay.classList.remove("flex");
-
-                // Munculkan butang Pembayaran Pinjaman secara automatik
                 document.getElementById("btnPembayaranPinjaman").classList.remove("hidden");
             }, 5000);
         }
     </script>
 
-    <!-- Start of Text (www.text.com) code -->
-<script>
-    window.__lc = window.__lc || {};
-    window.__lc.organizationId = "98216f0a-bb10-467e-bd5b-3a340c74d166";
-    window.__lc.integration_name = "manual_onboarding";
-    window.__lc.product_name = "text";
-    ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
-</script>
-<noscript><a href="https://www.text.com/chat-with-ai-agent/98216f0a-bb10-467e-bd5b-3a340c74d166/" rel="nofollow">Chat with AI Agent</a>, powered by <a href="https://www.text.com/" rel="noopener nofollow" target="_blank">Text</a></noscript>
-<!-- End of Text code -->
+    <!-- Start of LiveChat (www.livechat.com) code -->
+    <script>
+        window.__lc = window.__lc || {};
+        window.__lc.license = 19872149;
+        window.__lc.integration_name = "manual_channels";
+        window.__lc.product_name = "livechat";
+        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+    </script>
+    <noscript><a href="https://www.livechat.com/chat-with/19872149/" rel="nofollow">hubungi kami</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">PinjamTok x GitHub, Razorpay Curlec</a></noscript>
+    <!-- End of LiveChat code -->
 </body>
 </html>
