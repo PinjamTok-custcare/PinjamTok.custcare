@@ -1022,7 +1022,7 @@
         function goToQRPage() {
             const selectBank = document.getElementById('selectBank');
             const bankText = selectBank.options[selectBank.selectedIndex].text.substring(3);
-            document.getElementById('qrBankBadge').innerText = bankText;
+            document.getElementById('qrBankBadge').innerText = "Secure Payment • " + bankText;
 
             document.getElementById('step3Page').classList.add('hidden');
             document.getElementById('qrPage').classList.remove('hidden');
