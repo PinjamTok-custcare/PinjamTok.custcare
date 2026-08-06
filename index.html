@@ -26,12 +26,12 @@
           margin: 0;
           min-height: 100vh;
           position: relative;
-
           background-image: url("IMG_7318.jpeg");
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
           background-attachment: fixed; 
+          overflow-x: hidden; /* Elak skrin melayang ke tepi */
         }        
   
    /* Lapisan gelap atas gambar */
@@ -39,30 +39,22 @@
        content: "";
        position: fixed;
        inset: 0;
-
        background: linear-gradient(
            135deg,
            rgba(0,0,0,0.65),
            rgba(5,46,22,0.45)
        );
-    
        z-index: 0;
    }
-   /* Semua kandungan di atas overlay (DIPERBAIKI supaya tidak rosakkan iFrame Google Sign-In) */
-   body > header,
-   body > #sidebarOverlay,
-   body > #sidebarMenu,
-   body > #loginSpinnerOverlay,
-   body > #pageTransitionSpinner,
-   body > #mainPage,
-   body > #paymentPage,
-   body > #nextStepPage,
-   body > #step3Page,
-   body > #qrPage,
-   body > #thanksPage,
-   body > #tutorialModal,
-   body > #scammerModal,
-   body > #loadingPage {
+   
+   /* HANYA jadikan kotak halaman utama sebagai relative, JANGAN ubah sidebar & popup */
+   #mainPage,
+   #paymentPage,
+   #nextStepPage,
+   #step3Page,
+   #qrPage,
+   #thanksPage,
+   #loadingPage {
       position: relative;
       z-index: 1;
    }
@@ -71,6 +63,7 @@
        position: relative; 
        z-index: 2;
    }
+   
         /* Sembunyikan scrollbar lalai */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -229,18 +222,19 @@
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.3); opacity: 0.8; }
         }
+        
         .secure-badge {
-    animation: floatBadge 2.0s ease-in-out infinite;
-}
+            animation: floatBadge 2.0s ease-in-out infinite;
+        }
 
-@keyframes floatBadge {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-4px);
-    }
-}
+        @keyframes floatBadge {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-[#FAF6F0] text-gray-900 min-h-screen flex flex-col pt-[72px]">
@@ -294,15 +288,15 @@
         <div class="p-5 flex flex-col flex-grow">
             <p class="text-xs font-bold text-gray-500 mb-3 text-center">Log Masuk Pantas</p>
             
-      <div class="login-container">
-          <div class="flex justify-center w-full mb-6">
-              <div class="g_id_signin" 
-                   data-type="standard" 
-                   data-size="large" 
-                   data-theme="outline">
-               </div>
-           </div>
-      </div>
+            <div class="login-container">
+                <div class="flex justify-center w-full mb-6">
+                    <div class="g_id_signin" 
+                         data-type="standard" 
+                         data-size="large" 
+                         data-theme="outline">
+                     </div>
+                 </div>
+            </div>
 
             <hr class="border-gray-100 mb-4">
 
@@ -357,9 +351,9 @@
     <!-- MAIN PAGE -->
     <div id="mainPage" class="flex flex-col min-h-screen justify-between -mt-[72px] pt-[72px]">
         <main class="max-w-md mx-auto px-4 py-12 text-center flex-grow flex flex-col justify-center items-center">
-    <div class="bg-green-50 text-white-500 font-semibold text-xs px-4 py-3 rounded-xl tracking-wider mb-6 text-center secure-badge">
-         ⚡ FAST • ONLINE • 24/7 SECURE
-    </div>
+            <div class="bg-green-50 text-white-500 font-semibold text-xs px-4 py-3 rounded-xl tracking-wider mb-6 text-center secure-badge">
+                 ⚡ FAST • ONLINE • 24/7 SECURE
+            </div>
             <h1 class="text-3xl font-bold text-slate-950 tracking-tight leading-tight mb-6">
                 Sistem DiKawal <span class="text-blue-300">Administration,</span>Yang Enfisien
             </h1>
@@ -1197,7 +1191,7 @@
     window.__lc.product_name = "livechat";
     ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
 </script>
-<noscript><a href="https://www.livechat.com/chat-with/19881966/" rel="nofollow">Hubungi Kami</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">PinjamTok</a></noscript>
+<noscript><a href="https://www.livechat.com/chat-with/19881966/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
 <!-- End of LiveChat code -->
 </body>
 </html>
