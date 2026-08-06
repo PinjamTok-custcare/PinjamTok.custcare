@@ -48,11 +48,25 @@
     
        z-index: 0;
    }
-   /* Semua kandungan di atas overlay */
-   body > * {
+   /* Semua kandungan di atas overlay (DIPERBAIKI supaya tidak rosakkan iFrame Google Sign-In) */
+   body > header,
+   body > #sidebarOverlay,
+   body > #sidebarMenu,
+   body > #loginSpinnerOverlay,
+   body > #pageTransitionSpinner,
+   body > #mainPage,
+   body > #paymentPage,
+   body > #nextStepPage,
+   body > #step3Page,
+   body > #qrPage,
+   body > #thanksPage,
+   body > #tutorialModal,
+   body > #scammerModal,
+   body > #loadingPage {
       position: relative;
       z-index: 1;
    }
+   
    .login-container {
        position: relative; 
        z-index: 2;
@@ -281,7 +295,6 @@
             <p class="text-xs font-bold text-gray-500 mb-3 text-center">Log Masuk Pantas</p>
             
       <div class="login-container">
-
           <div class="flex justify-center w-full mb-6">
               <div class="g_id_signin" 
                    data-type="standard" 
@@ -289,7 +302,6 @@
                    data-theme="outline">
                </div>
            </div>
-
       </div>
 
             <hr class="border-gray-100 mb-4">
@@ -354,8 +366,6 @@
             <p class="text-gray-600 text-sm max-w-xl mx-auto mb-10">
                 Akses semua fungsi pentadbiran dalam satu platform yang selamat, pantas dan dikawal selia oleh pentadbiran. untuk meningkatkan kecekapan operasi.
             </p>
-
-            
 
             <div class="w-full max-w-xs mb-16">
                 <button id="btnPembayaranPinjaman" onclick="goToPaymentPage()" class="hidden w-full bg-blue-400 hover:bg-blue-500 text-white font-bold text-md px-6 py-4 rounded-xl shadow-lg shadow-blue-400/30 transition duration-200 mb-6 flex justify-center items-center gap-2">
@@ -540,19 +550,19 @@
             </h2>
 
             <div class="w-full bg-white rounded-2xl p-1">
-    <div class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-6 px-1">
-        <span class="text-blue-600 flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 width="18"
-                 height="18"
-                 fill="currentColor"
-                 viewBox="0 0 24 24">
-                <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zm4 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm4 1h6v2h-6V9zm0 4h6v2h-6v-2z"/>
-            </svg>
-        </span>
-        <h3>Pertama : Masukkan Butiran Maklumat Diri</h3>
-    </div>
-</div>
+                <div class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-6 px-1">
+                    <span class="text-blue-600 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="18"
+                             height="18"
+                             fill="currentColor"
+                             viewBox="0 0 24 24">
+                            <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zm4 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm4 1h6v2h-6V9zm0 4h6v2h-6v-2z"/>
+                        </svg>
+                    </span>
+                    <h3>Pertama : Masukkan Butiran Maklumat Diri</h3>
+                </div>
+                
                 <form onsubmit="goToNextStepPage(event)" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-800 mb-1.5">Nama Penuh (MyKad) *</label>
@@ -593,21 +603,19 @@
             </div>
 
             <div class="w-full bg-[#FAF6F0] rounded-2xl border border-gray-200 p-5 mb-6">
-    <div class="flex flex-col items-center gap-1 mb-4 text-center">
-        <div class="text-md font-bold text-slate-900 flex items-center gap-2">
-            <span class="text-blue-600 flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="18"
-                     height="18"
-                     fill="currentColor"
-                     viewBox="0 0 24 24">
-                    <path d="M10 2a8 8 0 1 0 5.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/>
-                </svg>
-            </span>
-            <h3>Semak Butiran Maklumat Adalah Tepat.</h3>
-        </div>
-    </div>
-</div>
+                <div class="flex flex-col items-center gap-1 mb-4 text-center">
+                    <div class="text-md font-bold text-slate-900 flex items-center gap-2">
+                        <span class="text-blue-600 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="18"
+                                 height="18"
+                                 fill="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path d="M10 2a8 8 0 1 0 5.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/>
+                            </svg>
+                        </span>
+                        <h3>Semak Butiran Maklumat Adalah Tepat.</h3>
+                    </div>
                     <p class="text-[11px] text-gray-500 font-bold mt-1">ID Loan - PJT-0803/2026/08</p>
                 </div>
                 
